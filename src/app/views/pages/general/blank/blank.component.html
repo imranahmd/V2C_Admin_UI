@@ -1,0 +1,436 @@
+<div class="d-flex row  align-items-center flex-wrap ">
+<div class="row">
+  <div class="col-sm-12">
+    <h5 class="mb-3 mb-md-0">Welcome to Admin Dashboard</h5>
+  </div>
+  
+    <div class="col-sm-4 mt-2">
+      <div class="mb-3">
+        <!-- <label class="form-label"> </label> -->
+        <ng-select [(ngModel)]="MerchantId" placeholder="Auth ID" id="merchantId" (change)="this.dashBoard('')">
+          <ng-option id="selectedOption" *ngFor="let merchant of Resdata" [value]="merchant.MerchantId">
+            {{merchant.MerchantId}} ({{merchant.merchant_name}}) 
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+  
+    <div class="col-sm-4 mt-2">
+      <div class="mb-3">
+        <!-- <label class="form-label"> </label> -->
+        <ng-select [(ngModel)]="VPAId" placeholder="VPA ID" id="VPAId" (change)="this.dashBoard('')" >
+          <ng-option id="selectedOption" *ngFor="let merchant of ResdataX" [value]="merchant.FieldText+'#'+merchant.FieldValue">
+            ({{merchant.FieldText}})  {{merchant.FieldValue}} 
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+   <!-- <div style="z-index: 100;position: fixed;margin-top: 20%;margin-left: 15%;margin-right: auto;" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div> -->
+      <div class="col-sm-4">
+  <div class="d-flex flex-wrap " id="clickbox">
+    <!-- <div class="p-2" style="
+    width: 35%;">
+
+</div> -->
+    <div class="p-2"><button type="button" class="btn btn-light" [ngClass]="{'active': this.active[0]}"
+        (mouseover)="customDate=true " (mouseout)="customDate=false" (click)="TodayDate()">Today</button></div>
+    <div class="p-2"><button type="button" class="btn btn-light" [ngClass]="{'active': this.active[1]}"
+        (mouseover)="customDate=true" (mouseout)="customDate=false" (click)="WeekDate()">Week</button></div>
+    <div class="p-2"><button type="button" class="btn btn-light" [ngClass]="{'active': this.active[2]}"
+        (mouseover)="customDate=true" (mouseout)="customDate=false" (click)="MonthDate()">Month</button></div>
+    <div class="p-2"><button type="button" class="btn btn-light" [ngClass]="{'active': this.active[3]}"
+        (mouseover)="customDate=true" (mouseout)="customDate=false"
+        (click)="CustomDate();DateCustom=true">Custom</button></div>
+    <!-- <div class="p-2" style="
+    width: 20%;">       
+   
+    </div> -->
+    
+    <!-- <i class="feather icon-lg icon-lg text-primary icon-calendar"></i> -->
+
+    <!-- <div style="z-index: 1; position:absolute;
+    top: 123px;background-color: white;" *ngIf="customDate||DateCustom">
+      <ngb-datepicker #datepicker="ngbDatepicker" class="range-selection " #dp (dateSelect)="onDateSelection($event)"
+        [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+      </ngb-datepicker>
+
+      <ng-template [autoClose]="'outside'" #t let-date let-focused="focused" style="z-index: 1;">
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div> -->
+
+    <!-- <div class="p-2"  style="width: 39%;">
+      <div class="example">
+        <form class="d-flex range-selection">
+          <div class="form-group hidden">
+            <div class="input-group">
+              <input name="datepicker"
+                     class="form-control"
+                     class="date-picker date-filter text-left" id="dateInput" ng-click="datepickerHover = true" ng-blur="datepickerHover = false"
+                     ngbDatepicker
+                     #datepicker="ngbDatepicker"
+                     [autoClose]="'outside'"
+                     (dateSelect)="onDateSelection($event)"
+                     [displayMonths]="2"
+                     [dayTemplate]="t"
+                     outsideDays="hidden"
+                     [startDate]="fromDate!">
+              <ng-template #t let-date let-focused="focused">
+                <span class="custom-day"
+                      [class.focused]="focused"
+                      [class.range]="isRange(date)"
+                      [class.faded]="isHovered(date) || isInside(date)"
+                      (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null">
+                  {{ date.day }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="input-group" (click)="datepicker.toggle()">
+              <input #dpFromDate
+                     class="form-control" placeholder="yyyy-mm-dd"
+                     name="dpFromDate"
+                     [value]="formatter.format(fromDate)"
+                     (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+              <button class="input-group-text" type="button">
+                <i class="feather text-primary icon-calendar icon-md text-muted"></i>
+              </button>
+            </div>
+          </div>
+          <div class="ms-2">
+            <div class="input-group" (click)="datepicker.toggle()">
+              <input #dpToDate
+                     class="form-control" placeholder="yyyy-mm-dd"
+                     name="dpToDate"
+                     [value]="formatter.format(toDate)"
+                     (input)="toDate = validateInput(toDate, dpToDate.value)">
+              <button class="input-group-text" type="button">
+                <i class="feather text-primary icon-calendar icon-md text-muted"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      
+      </div></div> -->
+    <!-- <div class="p-2"> </div> -->
+
+
+
+    <!-- <div class="p-2"></div> -->
+
+  </div>
+</div>
+<div class=" col-sm-4" [style.display]="DateCustom ? 'block' : 'none'"
+[style.opacity]="DateCustom ? '1' : '0'"
+[style.transition]="DateCustom ? 'fadeinout 5s linear forwards' : ''"
+ >
+  <div class="d-flex flex-wrap " id="clickbox">
+    <div class="p-2" style="
+    width: 78%;">
+<input type="text" id="datePickerElement"  (change)="datechange($event)"   ngxDaterangepickerMd [maxDate]='this.future.startDate'
+[(ngModel)]="selected" class="form-control" startKey="start" endKey="end"  #ref />
+</div>
+<div class="p-2">
+  <button class="btn btn-primary btn-icon-text  "   type="button"  (click)='dashBoard("search")'>
+    <i appFeatherIcon class="btn-icon-prepend" data-feather="search"></i>
+    
+  </button> 
+</div>
+</div>
+<!-- <div class="col-sm-6  mt-2">
+  
+  </div> -->
+  <!-- <div class="col-sm-2  mt-2">
+ 
+</div> -->
+</div>
+
+</div>
+
+
+  <!-- <div class=" align-items-center  col-md-9 row" >
+   
+
+
+     
+    <div class="input-group wd-200 me-2 mb-2 mb-md-0 col-md-3">
+      <button (click)="d.toggle()" class="btn btn-outline-primary btn-icon calendar" type="button">
+        <i appFeatherIcon data-feather="calendar"></i>
+      </button>
+      <input #d="ngbDatepicker" [(ngModel)]="currentDate" class="form-control border-primary bg-transparent" name="dp"  [maxDate]="newDate" [minDate]="newMinDate" ngbDatepicker placeholder="yyyy-mm-dd" (keypress)="OnlyNumbersAllowed($event)">
+    </div> 
+    <div class="input-group wd-200 me-2 mb-2 mb-md-0 col-md-3">
+      <button (click)="d1.toggle()" class="btn btn-outline-primary btn-icon calendar" type="button">
+        <i appFeatherIcon data-feather="calendar"></i>
+      </button>
+      <input #d1="ngbDatepicker" [(ngModel)]="newcurrentDate" class="form-control border-primary bg-transparent" name="dp"  [maxDate]="newDate" [minDate]="newMinDate" ngbDatepicker placeholder="yyyy-mm-dd" (keypress)="OnlyNumbersAllowed($event)">
+    </div>  
+    <div class="input-group wd-400 me-2 mt-3 mb-md-0 col-sm-8 ">
+
+
+</div>
+
+
+
+
+   
+  </div> -->
+</div>
+
+<div class="row">
+
+  <div class="col-12 col-xl-12 stretch-card">
+    <ul class="nav nav-tabs nav-tabs-line" id="lineTab" role="tablist">
+      <!-- <li class="nav-item" (click)="cycle()">
+        <a class="nav-link active" id="home-line-tab" data-bs-toggle="tab" role="tab" aria-controls="home"
+          aria-selected="true">Payin</a>
+      </li> -->
+     <!-- <li class="nav-item" (click)="bulk()">
+        <a class="nav-link " id="profile-line-tab" data-bs-toggle="tab" role="tab" aria-controls="profile"
+          aria-selected="false">Payout</a>
+      </li> -->
+
+    </ul>
+  </div>
+
+
+
+
+  <div class="tab-content mt-3" id="lineTabContent">
+    <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+      <div class="card-header row">
+        <div class="col">
+          <!-- <h4>Payin</h4> -->
+        </div>
+        <!-- <div class="col text-end">
+            <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+              Bulk Upload
+            </button>
+          </div> -->
+      </div>
+
+      <div class="card-body bg-white">
+
+        <app-upi [onMerchantMId]="BlockedmerchantSelectEvent"></app-upi>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="profile" #profile role="tabpanel" aria-labelledby="profile-line-tab">
+      <div class="card-header row">
+        <div class="col">
+          <!-- <h4>Payout</h4> -->
+        </div>
+        <!-- <div class="col text-end">
+        <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+          Bulk Upload
+        </button>
+      </div> -->
+      </div>
+      <div class="card-body bg-white">
+        <app-payout [onMerchantMId1]="BlockedmerchantSelectEvent1"></app-payout>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- For Active Merchants Charts-->
+<div class="col-12 col-xl-12 stretch-card" hidden>
+  <div class="row flex-grow-1">
+    <div class="col-md-4 grid-margin stretch-card" *ngIf="(!(this.UserType=='Merchant'))&&this.result">
+      <div class="card cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <!-- <h6 class="card-title mb-0">Active Merchants</h6> -->
+            <b class=" mb-0">Active Merchants</b>
+
+            <div ngbDropdown class="mb-2">
+              <!-- <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button" id="dropdownMenuButton">
+                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
+                      </button> -->
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <small>
+                <h5 class="mb-2" style="font-size: 112%;">{{this.value["current_ac_Merchant"]}}</h5>
+              </small>
+              <!-- {{this.value["current_ac_Merchant"]}} -->
+              <div class="d-flex align-items-baseline">
+                <!-- <p class="text-success"> -->
+                <span>{{currentNewDate | date:'dd-MMM-yyyy'}}</span>
+                <!-- <span>{{currentNewDate | date:'MMMM'}}</span> -->
+                <!-- <span>{{  currentNewDate| date: 'dd MMM yyyy'}}</span> -->
+
+
+
+                <!-- <i data-feather="arrow-up" appFeatherIcon class="icon-sm mb-1"></i> -->
+                <!-- </p> -->
+              </div>
+            </div>
+            <div class="col-6 col-md-12 col-xl-7" style="margin-top: -8px!important;">
+              <div class="mt-md-3 mt-xl-0">
+                <!-- <apx-chart
+                        [chart]="ordersChartOptions1.chart"
+                        [colors]="ordersChartOptions1.colors"
+                        [plotOptions]="ordersChartOptions1.plotOptions"
+                        [series]="ordersChartOptions1.series"
+                        [xaxis]="ordersChartOptions1.xaxis"
+                      ></apx-chart> -->
+                <apx-chart [chart]="monthlySalesChartOptions1.chart" [colors]="monthlySalesChartOptions1.colors"
+                  [dataLabels]="monthlySalesChartOptions1.dataLabels" [fill]="monthlySalesChartOptions1.fill"
+                  [grid]="monthlySalesChartOptions1.grid" [legend]="monthlySalesChartOptions1.legend"
+                  [plotOptions]="monthlySalesChartOptions1.plotOptions" [series]="monthlySalesChartOptions1.series"
+                  [stroke]="monthlySalesChartOptions1.stroke" [xaxis]="monthlySalesChartOptions1.xaxis"
+                  [yaxis]="monthlySalesChartOptions1.yaxis"></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 grid-margin stretch-card">
+      <div class="card cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <!-- <h6 class="card-title mb-0">TRANSACTION VOLUME</h6> -->
+            <b class=" mb-0">Transaction Volume</b>
+            <div ngbDropdown class="mb-2">
+              <!-- <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button" id="dropdownMenuButton">
+                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
+                      </button> -->
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <small>
+                <h5 class="mb-2" style="font-size: 112%;">₹ {{this.value["current_TranV"]}}</h5>
+              </small>
+              <div class="d-flex align-items-baseline">
+                <!-- {{this.value["current_TranV"]}} -->
+                <!-- <p class="text-success"> -->
+                <span>{{currentNewDate | date:'dd-MMM-yyyy'}}</span>
+                <!-- <i data-feather="arrow-up" appFeatherIcon class="icon-sm mb-1"></i> -->
+                <!-- </p> -->
+              </div>
+            </div>
+            <div class="col-6 col-md-12 col-xl-7" style="margin-top: -8px!important;">
+              <div class="mt-md-3 mt-xl-0">
+                <!-- <apx-chart
+                    [chart]="ordersChartOptions2.chart"
+                    [colors]="ordersChartOptions2.colors"
+                    [plotOptions]="ordersChartOptions2.plotOptions"
+                    [series]="ordersChartOptions2.series"
+                    [xaxis]="ordersChartOptions2.xaxis"
+                  ></apx-chart>  -->
+                <apx-chart [chart]="monthlySalesChartOptions2.chart" [colors]="monthlySalesChartOptions2.colors"
+                  [dataLabels]="monthlySalesChartOptions2.dataLabels" [fill]="monthlySalesChartOptions2.fill"
+                  [grid]="monthlySalesChartOptions2.grid" [legend]="monthlySalesChartOptions2.legend"
+                  [plotOptions]="monthlySalesChartOptions2.plotOptions" [series]="monthlySalesChartOptions2.series"
+                  [stroke]="monthlySalesChartOptions2.stroke" [xaxis]="monthlySalesChartOptions2.xaxis"
+                  [yaxis]="monthlySalesChartOptions2.yaxis"></apx-chart>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+      <div class="card cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <!-- <h6 class="card-title mb-0">TRANSACTION COUNT</h6> -->
+            <b class="mb-0">Transaction Count</b>
+            <div ngbDropdown class="mb-2">
+              <!-- <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button" id="dropdownMenuButton">
+                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
+                      </button> -->
+              <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
+                <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download"
+                    appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-md-12 col-xl-5">
+              <small>
+                <h5 class="mb-2" style="font-size: 112%;">{{this.value["current_TranCount"]}}</h5>
+              </small>
+              <div class="d-flex align-items-baseline">
+                <!-- <p class="text-success"> -->
+                <span>{{currentNewDate | date:'dd-MMM-yyyy'}}</span>
+                <!-- <i data-feather="arrow-up" appFeatherIcon class="icon-sm mb-1"></i> -->
+                <!-- </p> -->
+              </div>
+            </div>
+            <div class="col-6 col-md-12 col-xl-7" style="margin-top: -8px!important;">
+              <div class="mt-md-3 mt-xl-0">
+                <!-- <apx-chart
+                        [chart]="ordersChartOptions3.chart"
+                        [colors]="ordersChartOptions3.colors"
+                        [plotOptions]="ordersChartOptions3.plotOptions"
+                        [series]="ordersChartOptions3.series"
+                        [xaxis]="ordersChartOptions3.xaxis"
+                      ></apx-chart>  -->
+                <apx-chart [chart]="monthlySalesChartOptions3.chart" [colors]="monthlySalesChartOptions3.colors"
+                  [dataLabels]="monthlySalesChartOptions3.dataLabels" [fill]="monthlySalesChartOptions3.fill"
+                  [grid]="monthlySalesChartOptions3.grid" [legend]="monthlySalesChartOptions3.legend"
+                  [plotOptions]="monthlySalesChartOptions3.plotOptions" [series]="monthlySalesChartOptions3.series"
+                  [stroke]="monthlySalesChartOptions3.stroke" [xaxis]="monthlySalesChartOptions3.xaxis"
+                  [yaxis]="monthlySalesChartOptions3.yaxis"></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>

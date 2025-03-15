@@ -1,0 +1,235 @@
+<div class="row">
+    <div class="card">
+        <div class="card-body bg-white">
+            <form [formGroup]="serviceForm">
+
+                <div class="row">
+
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Service Provider Name <span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="serviceProviderName" placeholder="Service Provider"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceProviderName')?.errors}"
+                                maxlength="100" />
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceProviderName')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Service Provider
+                            </div>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceProviderName')?.errors?.pattern"
+                                class="invalid-feedback">
+                                Please Enter Valid  Service Provider Name
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Service Provider Class Invoker <span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <input class="form-control" id="RefundStatus" type="text" class="form-control"
+                                formControlName="serviceClassInvoker" placeholder="Service Provider Class Invoker"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors}"
+                                maxlength="50" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('serviceClassInvoker')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Service Provider Class Invoker
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Instruments to be assign <span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span></label>
+                            <ng-select placeholder="Instruments to be assign" id="Instruments"
+                                formControlName="Instruments" [items]="this.resdata" bindLabel="FieldText"
+                                bindValue="FieldValue"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('Instruments')?.errors}"
+                                [inputAttrs]="{maxlength:'50'}"  (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('Instruments')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Instruments to be assign
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Banks to be assign <span aria-hidden="true"
+                                    class="symbol required" style="color:red;">*</span> </label>
+                            <ng-select placeholder="Banks to be assign" id="Banks" formControlName="Banks"
+                                [items]=" this.getbankdata" bindLabel="bankName" bindValue="bankId"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('Banks')?.errors}"
+                                [inputAttrs]="{maxlength:'50'}"  (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('Banks')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Banks to be assign
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Master MID</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                placeholder="Master MID" formControlName="MasterMID" maxlength="100"
+                                 />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Master TID</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                placeholder="Master TID" formControlName="MasterTID" maxlength="100"
+                                 />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">API Key </label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                placeholder="API Key" formControlName="APIKey" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UDF 1</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="UDF1" placeholder="UDF 1" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UDF 2</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="UDF2" placeholder="UDF 2" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UDF 3</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="UDF3" placeholder="UDF 3" maxlength="50"(keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UDF 4</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="UDF4" placeholder="UDF 4" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UDF 5</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="UDF5" placeholder="UDF 5" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Service Provider Class Refund Processor </label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="RefundProcessor" placeholder="Service Provider Class Refund Processor"
+                                maxlength="50" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6" style="display: none">
+                        <div class="mb-3">
+                            <label class="form-label">Cut Off Time</label>
+                            <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="CutOffTime" placeholder="Cut Off Time" />
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-10"></div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-primary pull-right"
+                            (click)="onGenerate(serviceForm.value)">
+                            <span id="gloading" role="status" aria-hidden="true"></span>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

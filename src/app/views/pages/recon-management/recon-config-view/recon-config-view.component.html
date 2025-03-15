@@ -1,0 +1,249 @@
+<div class="row">
+  <div class="card">
+    <!-- <div class="card-header">
+      <h4>Recon Configuration</h4>
+    </div> -->
+    <div class="card-body bg-white">
+      <form (ngSubmit)="onSubmit(refundListFilter.value)" [formGroup]="refundListFilter">
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Service Provider <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+              <ng-select formControlName="spId" (click)="seletservice($event)"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('spId')?.errors}"
+                placeholder="Service Provider" id="spId" (focus)="fun('spId')" (focusout)="funover('spId')">
+                <ng-option id="selectedOption" *ngFor="let merchant of Resdata" [value]="merchant.FieldValue">
+                  {{merchant.FieldText}}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="isForm1Submitted && refundListFilter.get('spId')?.errors?.required" class="invalid-feedback">
+                Please Select Service Provider
+              </div>
+            </div>
+          </div><!-- Col -->
+          <div class="col-sm-6">
+
+            <div class="mb-3">
+              <label class="form-label">File Type<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+              <ng-select formControlName="InstrumentId" (change)="selectinstrument($event)"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('InstrumentId')?.errors}"
+                placeholder="File Type" id="InstrumentId" (focus)="fun('InstrumentId')"
+                (focusout)="funover('InstrumentId')">
+                <!-- <ng-option id="selectedOption" *ngFor="let merchant of Resdatas" [value]="merchant.FieldValue">
+                   {{merchant.FieldText}}
+                  </ng-option> -->
+                <ng-option id="selectedOption" value="txt">
+                  TXT
+                </ng-option>
+                <ng-option id="selectedOption" value="csv">
+                  CSV
+                </ng-option>
+                <ng-option id="selectedOption" value="dat">
+                  DAT
+                </ng-option>
+                <ng-option id="selectedOption" value="xlsx">
+                  Excel
+                </ng-option>
+              </ng-select>
+              <div *ngIf="isForm1Submitted && refundListFilter.get('InstrumentId')?.errors?.required"
+                class="invalid-feedback">
+                Please Select Instrument
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Seperator<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                    
+                                             (clear)="refundListFilter.get('merchantId')?.setValue('')"
+    " -->
+              <ng-select formControlName="Cycle"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('Cycle')?.errors}"
+                placeholder="Seperator" id="Cycle" (focus)="fun('Cycle')" (focusout)="funover('Cycle')">
+                <!-- <ng-option id="selectedOption" *ngFor="let merchant of Resbank" [value]="merchant.FieldValue">
+                  {{merchant.FieldText}}
+                </ng-option> -->
+                <ng-option id="selectedOption" value="com">
+                  Comma
+                </ng-option>
+                <ng-option id="selectedOption" value="tab">
+                  Tab
+                </ng-option>
+                <ng-option id="selectedOption" value="pip">
+                  |
+                </ng-option>
+              </ng-select>
+              <div *ngIf="isForm1Submitted && refundListFilter.get('Cycle')?.errors?.required" class="invalid-feedback">
+                Please Select Cycle
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Header Enabled in File<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                    
+                                             (clear)="refundListFilter.get('merchantId')?.setValue('')"
+    " -->
+              <ng-select formControlName="Header"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('Header')?.errors}"
+                placeholder="Header Enabled in File" id="Header" (focus)="fun('Header')" (focusout)="funover('Header')">
+                <!-- <ng-option id="selectedOption" *ngFor="let merchant of Resbank" [value]="merchant.FieldValue">
+                  {{merchant.FieldText}}
+                </ng-option> -->
+                <ng-option id="selectedOption" value="Y">
+                  Y
+                </ng-option>
+                <ng-option id="selectedOption" value="N">
+                  N
+                </ng-option>
+              </ng-select>
+              <div *ngIf="isForm1Submitted && refundListFilter.get('Header')?.errors?.required"
+                class="invalid-feedback">
+                Please Select Header
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Success Status Value <span aria-hidden="true" class="symbol required"
+                  style="color:red;"> * </span></label>
+              <input class="form-control" id="SuccessStatus" type="text"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('SuccessStatus')?.errors}"
+                class="form-control" formControlName="SuccessStatus" placeholder="Success Status Value" />
+              <div *ngIf="isForm1Submitted && refundListFilter.get('SuccessStatus')?.errors?.required"
+                class="invalid-feedback">
+                Please Enter Success Status Value
+              </div>
+              <div class="text-muted">
+                (eg.SUCCESS,OK,1,ETC.)
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Refund Status Value</label>
+              <input class="form-control" id="RefundStatus" type="text"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('RefundStatus')?.errors}"
+                class="form-control" formControlName="RefundStatus" placeholder="Refund Status Value" />
+              <div *ngIf="isForm1Submitted && refundListFilter.get('RefundStatus')?.errors?.required"
+                class="invalid-feedback">
+                Please Enter Refund Status Value
+              </div>
+              <div class="text-muted">
+                (eg.SUCCESS,OK,1,ETC.)
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Date Format <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label> 
+              <ng-select [(ngModel)]="searchFromDate"  id="ReconDate" type="text"
+              [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('ReconDate')?.errors}"
+               formControlName="ReconDate" placeholder="Date Format"
+                placeholder="Date Format"   (focus)="fun('ReconDate')" (focusout)="funover('ReconDate')">
+                <ng-option id="selectedOption" *ngFor="let merchant of ResdataX" [value]="merchant.date_order">
+                  {{merchant.date_order}} | {{merchant.description}}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="isForm1Submitted && refundListFilter.get('ReconDate')?.errors?.required" class="invalid-feedback">
+                Please Select Date Format
+              </div>
+            </div>
+          </div>
+<!-- 
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label">Date Format<span aria-hidden="true" class="symbol required" style="color:red;">
+                  * </span></label>
+              <input [(ngModel)]="searchFromDate" class="form-control" id="ReconDate" type="text"
+                [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('ReconDate')?.errors}"
+                class="form-control" formControlName="ReconDate" placeholder="Date Format" />
+              <div *ngIf="isForm1Submitted && refundListFilter.get('ReconDate')?.errors?.required"
+                class="invalid-feedback">
+                Please Enter Date Format
+              </div>
+              <div class="text-muted">
+                (eg.dd/MM/yyyy.)
+              </div>
+            </div>
+
+
+          </div> -->
+        </div>
+
+
+        <div style="overflow: auto;max-height: 300px;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Fields</th>
+                <th scope="col">Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of rowData;let i=index">
+                <th scope="row">{{row?.replace('_',' ')?.replace('_',' ').toUpperCase()}}</th>
+                <td><input (keypress)="OnlyNumbersAllowedWithoutDecimal($event)" formControlName="field{{i+1}}"
+                    [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('field{{i+1}}')?.errors}"
+                    [placeholder]="row?.replace('_',' ')?.replace('_',' ').toUpperCase() " #t="ngbTooltip"
+                    [ngbTooltip]="''" placement="left" (keypress)="t.open()" (keypress)="Validate(row,$event,i+1)"
+                    maxlength="2" id="field{{i+1}}" class="form-control col-md-2" style="max-width: 200px;"
+                    type="text" />
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('field{{i+1}}')?.errors?.required"
+                    class="invalid-feedback">
+                    Please Enter {{row}}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="row mb-2">
+            <div class="col-xs-12">
+              <div class="text-end">
+                <button class="btn btn-primary pull-right" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div> -->
+        <div class="row">
+          <div class="col-md-10"></div>
+
+          <div class="col-md-2">
+            <button type="button" class="form-control btn btn-primary pull-right" [disabled]="this.loading"
+              (click)="onGenerate(refundListFilter.value)">
+              <span id="gloading" role="status" aria-hidden="true"></span>
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- <button (click)="dataSubmit(allBooksFormGroup.value)">
+  submit data</button> -->
+  </div>
+</div>

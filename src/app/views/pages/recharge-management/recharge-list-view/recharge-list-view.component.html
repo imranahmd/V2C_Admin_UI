@@ -1,0 +1,212 @@
+<div class="row">
+    <div class="card">
+        <div class="card-body bg-white">
+            <form [formGroup]="serviceForm">
+
+                <div class="row">
+
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Merchant ID </label>
+                            <input class="form-control" id="merchant_id" type="text" class="form-control" readonly
+                                formControlName="merchant_id" placeholder="Merchant ID"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('merchant_id')?.errors}"
+                                maxlength="100" />
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('merchant_id')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Merchant ID
+                            </div>
+                          
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Account Number  </label>
+                            <input class="form-control" id="account_no" type="text" class="form-control" readonly
+                                formControlName="account_no" placeholder="Account Number"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('account_no')?.errors}"
+                                maxlength="50" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('account_no')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Account Number
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                  
+
+                     
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">UTR Number</label>
+                            <input class="form-control" id="utr_no" type="text" class="form-control" readonly
+                                placeholder="UTR Number" formControlName="utr_no" maxlength="100"
+                                 />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID</label>
+                            <input class="form-control" id="txn_id" type="text" class="form-control" readonly
+                                placeholder="Transaction ID" formControlName="txn_id" maxlength="100"
+                                 />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input class="form-control" id="amount" type="text" class="form-control" readonly
+                                placeholder="Amount" formControlName="amount" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+
+
+                        </div>
+
+
+                    </div>
+                  
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label"> Is Approved</label>
+                            <input class="form-control" id="isApproved" type="text" class="form-control" readonly
+                                formControlName="isApproved" placeholder="Is Approved"
+                                maxlength="50" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">status</label>
+                            <input class="form-control" id="status" type="text" class="form-control"
+                                formControlName="status" placeholder="Status" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">IP Address</label>
+                            <input class="form-control" id="IPAddress" type="text" class="form-control" readonly
+                                formControlName="IPAddress" placeholder="IPAddress" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Created By</label>
+                            <input class="form-control" id="createdBy" type="text" class="form-control" readonly
+                                formControlName="createdBy" placeholder="createdBy" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Updated On</label>
+                            <input class="form-control" id="updatedOn" type="text" class="form-control" readonly
+                                formControlName="updatedOn" placeholder="updatedOn" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Updated By</label>
+                            <input class="form-control" id="updatedBy" type="text" class="form-control" readonly
+                                formControlName="updatedBy" placeholder="updatedBy" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Created On</label>
+                            <input class="form-control" id="createdOn" type="text" class="form-control" readonly
+                                formControlName="createdOn" placeholder="createdOn" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                            <label class="form-label">Remark <span aria-hidden="true"
+                                class="symbol required" style="color:red;">*</span></label>
+                            <textarea class="form-control" id="remark" formControlName="remark" placeholder="Remark"
+                            [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('remark')?.errors}" ></textarea>
+                                <div *ngIf="isForm1Submitted && serviceForm.get('remark')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Remark
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-primary pull-right"
+                            (click)="onGenerate(serviceForm.value,'A')">
+                            <span id="gloading" role="status" aria-hidden="true"></span>
+                            Approve
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-danger pull-right"
+                            (click)="onGenerate(serviceForm.value,'R')">
+                            <span id="rloading" role="status" aria-hidden="true"></span>
+                            Reject
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

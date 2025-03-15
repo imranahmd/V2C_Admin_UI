@@ -1,0 +1,90 @@
+<!-- <p>role-view works!</p> -->
+
+<div class="row">
+    <div class="card">
+
+        <div class="tab-content mt-3" id="lineTabContent">
+            <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+                <div class="card-header row">
+                    <div class="col">
+                        <!-- <h4>Merchant Menu Mapping
+                        </h4> -->
+                    </div>
+
+                </div>
+
+                <div class="card-body bg-white">
+                    <form [formGroup]="userForm">
+                        <div class="row">
+
+
+                            <div class="col-sm-8">
+                                <div class="mb-3">
+                                    <label class="form-label">Auth ID</label>
+                                    <ng-select formControlName="merchantId" placeholder="Auth ID" id="merchantId">
+                                        <ng-option id="selectedOption" *ngFor="let merchant of resdata"
+                                            [value]="merchant.MerchantId">
+                                            {{merchant.merchant_name}} ({{merchant.MerchantId}})
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2 mt-4">
+                                <button style="margin-top: 4.0%;" class="form-control btn btn-primary pull-right" type="submit"
+                                    (click)="updateMenu(userForm.value)" [disabled]="this.loading">
+                                    <span id="loading" role="status" aria-hidden="true"></span>
+                                    Add
+                                </button>
+                            </div>
+
+
+
+                        </div> 
+                    </form>
+
+                    <div class="row">
+                        <div class="mb-4 card col-sm-4" *ngFor="let row of this.menuData">
+                            <div class="card-body">
+
+                                <h6>{{row.MenuName}}</h6>&nbsp;
+                                <!-- {{row.MenuName |json}} -->
+                                <!-- {{this.menuData}} -->
+
+                                <div class="row" *ngFor="let element of row.SubMenu;let i=index;">
+                                    <div class="col-sm-6 form-check mb-2"
+                                        [style.visibility]="(getKeys(element)['key'][0]==element[getKeys(element)['key'][0]][0].SubMenuName) ? 'visible' : 'hidden'">
+
+                                        <label class="form-check-label" for="checkDefault">
+
+                                            <input type="checkbox" class="form-check-input"
+                                                [id]="element[getKeys(element)['key'][0]][0].SubMenuId"
+                                                (change)="updateChkbxArray(element[getKeys(element)['key'][0]][0],row.MenuId,row.MenuName, $event.target, 'menuName')"
+                                                [value]="element[getKeys(element)['key'][0]][0].SubMenuId">
+                                           <span style="white-space: nowrap;"> {{element[getKeys(element)['key'][0]][0].SubMenuName}} </span>
+                                        </label>
+                                    </div>
+
+                                    <!-- <div class="col-sm-6 form-check mb-2">
+                                
+                               
+                            </div> -->
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+</div>

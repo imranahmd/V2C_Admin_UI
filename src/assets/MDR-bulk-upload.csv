@@ -1,0 +1,4 @@
+﻿sr_no,merchant_id,sp_id,bank_id,instrument_id,min_amt,max_amt,mdr_type,aggr_mdr,reseller_mdr,base_rate,min_base_rate,max_base_rate,min_mdr,max_mdr,mid,tid,channel_id,start_date,end_date,prefrences,surcharge,card_variant_name,network,instrument_brand,bank_mdr_type,min_reseller_mdr,max_reseller_mdr,reseller_mdr_type
+1,M00006378,DemoBankUPI,UPI,UPI,1,100000,flat,12.04,12.04,1,1,1.2,1,1,123456,password@123,2,05-09-2017,19-09-2017,0,yes,,,0,flat,1,1.2,Percentage
+2,M00006378,ICICI NB,ICICI,NB,1,100000,flat,12.04,12.04,1,1,1.2,1,1,123456,password@123,2,05-09-2017,19-09-2017,0,yes,,,0,flat,1,1.2,Percentage
+3,M00006377,Demo,PADemo Bank,NB,1,100000,flat,12.04,12.04,1,1,1.2,1,1,123456,password@123,2,05-09-2017,19-09-2017,0,yes,,,0,flat,1,1.2,Percentage

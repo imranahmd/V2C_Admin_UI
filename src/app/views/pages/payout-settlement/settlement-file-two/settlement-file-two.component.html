@@ -1,0 +1,208 @@
+<div class="row">
+    <div class="card">
+      <ul class="nav nav-tabs nav-tabs-line" id="lineTab" role="tablist">
+        <li class="nav-item" (click)="DailySettlement()">
+          <a class="nav-link active" id="home-line-tab" data-bs-toggle="tab" role="tab" aria-controls="home"
+            aria-selected="true">Daily Settlement 1.0</a>
+        </li>
+        <li class="nav-item" (click)="ReverseFeed()">
+          <a class="nav-link " id="profile-line-tab" data-bs-toggle="tab" role="tab" aria-controls="profile"
+            aria-selected="false">Reverse Feed
+          </a>
+        </li>
+  
+      </ul>
+      <div class="tab-content mt-3" id="lineTabContent">
+        <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+          <form [formGroup]="dailysettlement2" (ngSubmit)="onSubmit(dailysettlement2.value)">
+          <div class="row">
+            <div class="card">
+              <div class="card-header">
+                <h4>Daily Settlement 1.0</h4>
+              </div>
+             
+              <div class="card-body bg-white">
+               
+  
+                  <div class="row">
+  
+                    <div class="col-sm-4" style="margin-top:1%">
+                      <div class="mb-3">
+                        <label class="form-label">Payments Payout Reference Id </label>
+                        <input class="form-control" formControlName="PayoutId" 
+                          placeholder="Payments Payout Reference Id" id="PayoutId"  [ngClass]="{'is-invalid': isForm2Submitted && form2.PayoutId.errors}"   (focusout)="funover('PayoutId')" (focus)="fun('PayoutId')" (keypress)="OnlyCharacterNumberAllowed($event)">
+                          <div *ngIf="isForm2Submitted && form2.PayoutId.errors?.required" class="invalid-feedback">
+                            Please Select Payments Payout Reference Id
+                          </div>
+            
+  
+  
+  
+                      </div>
+  
+  
+                    </div>
+  
+                    <div class="col-sm-4" style="margin-top:1%">
+                      <div class="mb-3">
+                        <label class="form-label"> UTR NO </label>
+                        <input class="form-control" formControlName="UTRNO" 
+                          placeholder="Bank UTR NO" id="UTRNO"  [ngClass]="{'is-invalid': isForm2Submitted && form2.UTRNO.errors}" (focus)="fun('UTRNO')"  (focusout)="funover('UTRNO')"  (keypress)="OnlyCharacterNumberAllowed($event)">
+                          <div *ngIf="isForm2Submitted && form2.UTRNO.errors?.required" class="invalid-feedback">
+                            Please Select Bank UTR Number
+                          </div>
+            
+                        <!-- <div *ngIf="Ress">
+                                 <i class="feather text-primary icon-check-circle icon-lg" style="color: green;"></i>
+                                </div> -->
+  
+  
+  
+                      </div>
+  
+  
+                    </div>
+  
+  
+                    <div class="row mb-2">
+                      <div class="col-xs-12">
+                        <div class="text-end">
+  
+                          <button class="btn btn-primary pull-right" style="width: 15%;" type="submit" [disabled]="this.loading">
+                            <span id="loading" role="status" aria-hidden="true"></span>
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+  
+  
+                  </div>
+  
+  
+                  <div class="row">
+  
+  
+  
+  
+  
+  
+  
+                  </div>
+                
+              </div>
+           
+            </div>
+            </div>
+          </form>
+          </div>
+  
+  
+  
+        </div>
+  
+  
+  
+  
+  
+        <div [style.display]="ReversefeedShow ? 'block' : 'none'" class="tab-pane fade" id="profile" #profile role="tabpanel" aria-labelledby="profile-line-tab">
+          <form [formGroup]="uploadfile2" (ngSubmit)="onUpload(uploadfile2.value)">
+            <div class="card-header">
+              <h4>Reverse Feed</h4>
+            </div>
+  
+          <div class="col-sm-4" style="margin-top:1%">
+            <div class="mb-3">
+              <label class="form-label">Upload File<span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+              <input  id="file" class="form-control" formControlName="UploadFile"  type="file" (change)='onFileSelect($event)'  (focus)="fun('file')"
+              (focusout)="funover('file')" 
+              [ngClass]="{'is-invalid': isForm2Submitted && form2.UploadFile.errors}"
+              >
+              <div *ngIf="isForm2Submitted && form2.UploadFile.errors?.required" class="invalid-feedback">
+                Please select Document
+              </div>
+  
+            
+            </div>
+  
+  
+          </div>
+          <div class="row mb-2">
+            <div class="col-xs-12">
+              <div class="text-center">
+  
+                <button class="btn btn-primary pull-right" style="width: 15%;" type="submit">
+                  Upload
+                </button>
+                
+              </div>
+            </div>
+       
+          
+          </div>
+  
+  
+        </form>
+        <div class="row" [style.display]="rowDataValue ? 'block' : 'none'">
+          <div class="col-md-12 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h6 class="card-title">Settlement Updates</h6>
+                <div class="table-responsive">
+      
+                  <table id="dataTableExample" class="table">
+                    <thead>
+                      <tr>
+                        <th>Sr. No.</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                        <th>UTRNumber</th>
+                        <th>PgRefrenceNumber</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      <!-- <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Edinburgh</td>
+                        <td>61</td>
+                        <td>2011/04/25</td>
+                        <td>$320,800</td>
+                      </tr> -->
+                      <!-- <tr *ngFor="let row of rowData">
+                        <td>{{row.sr_no}}</td>
+                        <td>{{row.merchantId}}</td>            
+                        <td>{{row.merchant_name}}</td>
+                        <td>{{row.reseller_id}}</td>
+                        <td>{{row.uploadStatus}}</td>
+                        <td style="word-wrap: break-word;min-width: 16px;max-width: 160px;">{{row.remarks}}</td>
+                      </tr> -->
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+     
+  
+      </div>
+  
+  
+    </div>
+    
+    
+   
+  

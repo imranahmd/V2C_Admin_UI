@@ -1,0 +1,127 @@
+<!-- <p>role-view works!</p> -->
+
+<div class="row">
+  <div class="card">
+
+    <div class="tab-content mt-3" id="lineTabContent">
+      <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+        <div class="card-header row">
+          <div class="col">
+            <h4>Add Role
+            </h4>
+          </div>
+
+        </div>
+
+        <div class="card-body bg-white">
+          <form [formGroup]="rolepermissionForm">
+            <div class="row">
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Role Name <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input autocomplete="new-password" class="form-control" id="Payid" placeholder="Role Name"
+                    type="text" maxlength="40" formControlName="RoleName"
+                    [ngClass]="{'is-invalid': submit1 && rolepermissionForm.get('RoleName')?.errors}">
+
+                  <div *ngIf="submit1 && rolepermissionForm.get('RoleName')?.errors?.required" class="invalid-feedback">
+                    Please Enter Role Name
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Role Description <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input autocomplete="new-password" class="form-control" id="Payid" placeholder="Role Description"
+                    type="text" maxlength="40" formControlName="RoleDescription"
+                    [ngClass]="{'is-invalid': submit1 && rolepermissionForm.get('RoleDescription')?.errors}">
+
+                  <div *ngIf="submit1 && rolepermissionForm.get('RoleDescription')?.errors?.required"
+                    class="invalid-feedback">
+                    Please Enter Role Description
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Status</label>
+                  <ng-select placeholder="Status" id="merchantId" bindLabel="FieldText" bindValue="FieldValue"
+                    formControlName="Status" [items]="this.Status"
+                    [ngClass]="{'is-invalid': submit1 && rolepermissionForm.get('Status')?.errors}">
+
+                  </ng-select>
+
+                  <div *ngIf="submit1 && rolepermissionForm.get('Status')?.errors?.required" class="invalid-feedback">
+                    Please Enter Role Description
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-2">
+                <!-- <button type="button" class="form-control btn btn-danger pull-right">Reset
+                </button> -->
+              </div>
+              <div class="col-md-2">
+                <button class="form-control btn btn-primary pull-right" type="submit"
+                  (click)="updateMenu(rolepermissionForm.value)">
+                  <span id="loading" role="status" aria-hidden="true"></span>
+                  Add
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="mb-4" *ngFor="let row of this.menuData">
+            <h6>{{row.MenuName}}</h6>&nbsp;
+            <div class="row" *ngFor="let element of row.SubMenu;let i=index;">
+              <div class="col-sm-6 form-check mb-2"
+                [style.visibility]="(getKeys(element)['key'][0]==element[getKeys(element)['key'][0]][0].SubMenuName) ? 'visible' : 'hidden'">
+                <!-- <input type="checkbox" class="form-check-input" (change)="updateMenuChkbxArray(element[getKeys(element)['key'][0]][0],row.MenuId,getKeys(element)['key'][0], $event.target, 'menuMainName')" > -->
+                <label class="form-check-label" for="checkDefault">
+                  <!-- {{i+1}}. -->
+                  • {{getKeys(element)['key'][0]}}
+                </label>
+              </div>
+              <!-- <div class="row"> -->
+              <div class="col-sm-6 form-check mb-2">
+                <input type="checkbox" class="form-check-input"
+                  [id]="element[getKeys(element)['key'][0]][0].permissionID"
+                  (change)="updateChkbxArray(element[getKeys(element)['key'][0]][0],row.MenuId,getKeys(element)['key'][0], $event.target, 'menuName')"
+                  [value]="element[getKeys(element)['key'][0]][0].permissionID">
+                <label class="form-check-label" for="checkDefault">
+                  {{element[getKeys(element)['key'][0]][0].PermissionAction}}
+                  ({{element[getKeys(element)['key'][0]][0].permissionID}})
+                </label>
+              </div>
+              <!-- </div> -->
+              <!-- <div class="col-sm-4"></div> -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+  </div>
+</div>

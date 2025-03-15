@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="card">
+
+      <div class="tab-content mt-3" id="lineTabContent">
+          <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+              <div class="card-header row">
+                  <div class="col">
+                      <h4>Upload Manual Refund
+                      </h4>
+                  </div>
+
+              </div>
+
+              <div class="card-body bg-white">
+                  <form [formGroup]="uploadRefundForm" (ngSubmit)="onSubmit(uploadRefundForm.value)">
+                      <div class="row">
+                          <div class="col-sm-4">
+                              <div class="mb-3">
+                                  <label class="form-label">Service Provider  <span aria-hidden="true" class="symbol required"
+                                      style="color:red;">*</span></label>
+
+                                  <ng-select placeholder=" Select Search By" id="spId" [items]="Search_By"
+                                      bindLabel="FieldText" bindValue="FieldValue" [inputAttrs]="{maxlength:'50'}"
+                                      formControlName="spId" (keypress)="OnlyCharacterAllowed($event)"
+                                      [ngClass]="{'is-invalid': isForm1Submitted && uploadRefundForm.get('spId')?.errors}" (keydown)="NoDoubleSpace($event)">
+
+                                  </ng-select>
+                                  <div *ngIf="isForm1Submitted && uploadRefundForm.get('spId')?.errors?.required"
+                                  class="invalid-feedback">
+                                  Please Select Service Provider
+                              </div>
+                              
+
+                              </div>
+                          </div>
+
+                          <div class="col-sm-8">
+                              <div class="mb-3">
+                                  <label class="form-label">Upload Manual Refund
+                                      <span aria-hidden="true" class="symbol required"
+                                          style="color:red;">*</span></label>
+                                  <input id="file" class="form-control" type="file" formControlName="file"
+                                      (change)='onFileSelect($event)'
+                                      [ngClass]="{'is-invalid': isForm1Submitted && uploadRefundForm.get('file')?.errors}"
+                                      >
+                                  <div *ngIf="isForm1Submitted && uploadRefundForm.get('file')?.errors?.required"
+                                      class="invalid-feedback">
+                                      Please Select File
+                                  </div>
+                              </div>
+                          </div>
+
+
+
+
+
+
+                      </div>
+
+
+                      <div class="row">
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                              <button type="button" class="form-control btn btn-danger pull-right"
+                                  (click)="resetform()">Reset
+                              </button>
+                          </div>
+                          <div class="col-md-2">
+                              <button class="form-control btn btn-primary pull-right" type="submit"  [disabled]="this.loading">
+                                  <span id="loading" role="status" aria-hidden="true"></span>
+                               Upload
+                              </button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+
+      </div>
+
+
+
+
+
+  </div>
+</div>
+
+
+
+<div class="row mt-3" [style.display]="this.rowData?.Status=='Success' ? 'block' : 'none'">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Manual Refund List</h6>
+        <div class="table-responsive">
+           <!-- <button type="button" class="btn btn-light">Export CSV<i  class="feather icon-download"></i></button>  -->
+          <table id="dataTableExample" class="table">
+            <thead>
+              <tr>
+                <th>Serial No</th>
+                <th>Status</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody >
+              <!-- <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+              </tr> -->
+              <!-- <tr *ngFor="let row of rowData">
+                <td>{{row.sr_no}}</td>
+                <td>{{row.merchantId}}</td>            
+                <td>{{row.merchant_name}}</td>
+                <td>{{row.reseller_id}}</td>
+                <td>{{row.uploadStatus}}</td>
+                <td style="word-wrap: break-word;min-width: 16px;max-width: 160px;">{{row.remarks}}</td>
+              </tr> -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

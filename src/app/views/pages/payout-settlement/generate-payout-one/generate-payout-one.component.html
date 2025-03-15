@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="card">
+
+
+
+    <div class="card-header">
+      <h4>Generate Payout 1.0</h4>
+    </div>
+
+    <form [formGroup]="generatepayout" (ngSubmit)="onSubmit(generatepayout.value)">
+      <div class="card-body bg-white">
+        <!-- <form (ngSubmit)="onSubmit()" >
+       -->
+        <div class="row">
+
+          <div class="col-sm-4 mt-3">
+            <label class="form-label">Payout Escrow:</label>
+            <div class="mb-4">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" name="Bankprovider" value="HDFC"
+                  formControlName="Bankprovider" id="HDFC">
+                <label class="form-check-label" for="radioInline">
+                  HDFC
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" name="Bankprovider" value="YesBank"
+                  formControlName="Bankprovider" id="YesBank">
+                <label class="form-check-label" for="radioInline1">
+                  Yes Bank
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-8" style="margin-top:1%">
+            <div class="mb-3">
+              <label class="form-label">Transaction Date:</label>
+              <input class="form-control" formControlName="txnDate" id="txnDate" type="date"
+                [ngClass]="{'is-invalid': isForm1Submitted && form1.txnDate.errors}" [max]="getToday()" />
+
+              <div *ngIf="isForm1Submitted && form1.txnDate.errors?.required" class="invalid-feedback">
+                Please Select Transaction Date
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="row mb-2">
+          <div class="col-xs-12">
+            <div class="text-end">
+
+              <button class="form-control btn btn-danger pull-right" style="width: 15%;" type="button" (click)="resetform()">
+                Reset
+              </button>
+              
+              &nbsp;
+
+              <button class="btn btn-primary pull-right" style="width: 15%;" type="submit" [disabled]="this.loading">
+                <span id="loading" role="status" aria-hidden="true"></span>
+                Submit
+              </button>
+
+              
+             
+            </div>
+          </div>
+       
+
+        </div>
+
+      </div>
+
+
+    </form>
+    <p *ngIf="this.payoutdata">
+      {{this.payoutdata?.ResponseMessage}}
+    </p>
+    <div *ngIf="this.payoutdata">
+      <ul class="nav flex-column">
+        <li class="nav-item " style="color:cornflowerblue!important;--bs-text-opacity: auto;"  *ngIf= "this.payoutdata?.Data[0]?.transactionwise_payout_path" (click)="Downloads(this.payoutdata?.Data[0]?.transactionwise_payout_path)"> <a class="nav-link d-flex align-items-center text-body "><span class="feather icon-file-text icon-lg text-muted me-1"></span>{{this.payoutdata?.Data[0]?.transactionwise_payout_path}}<span class="text-muted tx-11 ms-1"></span></a></li>
+        <li class="nav-item" style="color:cornflowerblue!important;--bs-text-opacity: auto;" *ngIf= "this.payoutdata?.Data[0]?.merchantwise_payout_path else ifNotShow" (click)="Downloads(this.payoutdata?.Data[0]?.merchantwise_payout_path)" > <a class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span>{{this.payoutdata?.Data[0]?.merchantwise_payout_path}}<span class="text-muted tx-11 ms-1"></span></a></li>
+        <ng-template #ifNotShow>
+          <li class="nav-item"  style="color:cornflowerblue!important;--bs-text-opacity: auto;"> <a class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span>null<span class="text-muted tx-11 ms-1"></span></a></li>
+        </ng-template>
+        <!-- <li class="nav-item" *ngIf= " this.withmerchant" (click)="Downloads(this.payoutdata.merchantwise_payout_path)"> <a class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span>{{this.payoutdata.merchantwise_payout_path}}<span class="text-muted tx-11 ms-1"></span></a></li> -->
+        <!-- <li class="nav-item"><a href="" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Team-list.pdf <span class="text-muted tx-11 ms-1">(4.5 MB)</span></a></li>
+        <li class="nav-item"><a href="" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Team-list.pdf <span class="text-muted tx-11 ms-1">(4.5 MB)</span></a></li> -->
+      </ul>
+    </div>
+    <!-- {{this.payoutdata.Data.transactionwise_payout_path|json}} -->
+
+
+    <!-- <p>
+      {{this.payoutdata.Data.transactionwise_payout_path}}
+    </p> -->
+
+  </div>
+
+
+</div>

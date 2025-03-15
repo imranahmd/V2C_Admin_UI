@@ -1,0 +1,167 @@
+<!-- <p>service-provider works!</p> -->
+<div class="row">
+    <div class="card">
+  
+      <div class="tab-content mt-3" id="lineTabContent">
+        <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+          <div class="card-header row">
+            <div class="col-sm-8">
+              <h4>Recharge Add
+              </h4>
+            </div>
+            <div class="col-sm-4" *ngIf="this.AvailableBal">
+                <h4>  Available Balance : {{AvailableBal[0]?.AvailableBalance||'NA'}}</h4>
+  </div>
+          </div>
+  
+          <div class="card-body bg-white">
+            <form [formGroup]="serviceProviderForm">
+              <div class="row">
+  
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                      <label class="form-label">Auth ID<span aria-hidden="true" class="symbol required"
+                          style="color:red;">*</span></label>
+                      <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                          
+                                                   (clear)="refundListFilter.get('merchantId')?.setValue('')"
+          " -->
+                      <ng-select  formControlName="merchantId" (change)="AccountList()"
+                        [ngClass]="{'is-invalid': submit1 && serviceProviderForm.get('merchantId')?.errors}"
+                        placeholder="Auth ID" id="merchantId" (focus)="fun('merchantId')" (focusout)="funover('merchantId')"
+                        (keypress)="OnlyCharacterNumberAllowed($event)">
+                        <ng-option id="selectedOption" *ngFor="let merchant of Resdata" [value]="merchant.MerchantId">
+                          {{merchant.merchant_name}} ({{merchant.MerchantId}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngIf="submit1 && serviceProviderForm.get('merchantId')?.errors?.required"
+                        class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="mb-3">
+                      <label class="form-label">Account Number <span aria-hidden="true" class="symbol required"
+                        style="color:red;">*</span></label>
+                        <ng-select  formControlName="account_no" 
+                        [ngClass]="{'is-invalid': submit1 && serviceProviderForm.get('account_no')?.errors}"
+                        placeholder="Account Number" id="account_no" (focus)="fun('account_no')" (focusout)="funover('account_no')"
+                        (keypress)="OnlyCharacterNumberAllowed($event)">
+                        <ng-option id="selectedOption" *ngFor="let merchant of rowDatas" [value]="merchant.accountNumber">
+                          {{merchant.accountNumber}} ({{merchant.bankName}})
+                        </ng-option>
+                      </ng-select>
+                      <div *ngIf="submit1 && serviceProviderForm.get('account_no')?.errors?.required"
+                        class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="mb-3">
+                      <label class="form-label">Amount <span aria-hidden="true" class="symbol required"
+                        style="color:red;">*</span></label>
+                      <input (keypress)="OnlyNumbersAllowedWithDecimal($event)"  appTwoDigitDecimaNumber [ngClass]="{'is-invalid': submit1 && serviceProviderForm.get('amount')?.errors}"
+                        class="form-control" formControlName="amount" placeholder="Enter Amount" type="text"
+                        autocomplete="new-password" id="amount" >
+                      <div *ngIf="submit1 && serviceProviderForm.get('amount')?.errors?.required"
+                        class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div> 
+                 
+                  <div class="col-sm-4">
+                    <div class="mb-3">
+                      <label class="form-label">UTR Number <span aria-hidden="true" class="symbol required"
+                        style="color:red;">*</span></label>
+                      <input (keypress)="OnlyCharacterNumberAllowed($event)" [ngClass]="{'is-invalid': submit1 && serviceProviderForm.get('utr_no')?.errors}"
+                        class="form-control" formControlName="utr_no" placeholder="Enter UTR Number" type="text"
+                        autocomplete="new-password" id="utr_no" >
+                      <div *ngIf="submit1 && serviceProviderForm.get('utr_no')?.errors?.required"
+                        class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="mb-3">
+                      <label class="form-label">Service Type <span aria-hidden="true" class="symbol required"
+                        style="color:red;">*</span></label>
+                      <input  [ngClass]="{'is-invalid': submit1 && serviceProviderForm.get('service_type')?.errors}"
+                        class="form-control" formControlName="service_type" placeholder="Enter Service Type" type="text"
+                        autocomplete="new-password" id="service_type" readonly>
+                      <div *ngIf="submit1 && serviceProviderForm.get('service_type')?.errors?.required"
+                        class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+              </div>
+  
+  
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-2">
+                  <button type="button" class="form-control btn btn-danger pull-right" (click)="reset()">Reset
+                  </button>
+                </div>
+                <div class="col-md-2">
+                  <button class="form-control btn btn-primary pull-right" (click)="onSubmit(serviceProviderForm.value)"
+                    type="submit">
+                    <span id="loading" role="status" aria-hidden="true"></span>
+                  Add
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+  
+      </div>
+  
+  
+  
+  
+  
+    </div>
+  </div>
+
+  <div >
+    <div class="row" style="min-height: 500px" >
+      <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+        <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+          class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+          (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true" [rowSelection]="'single'"
+          [suppressPaginationPanel]="true"  (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+          (filterOpened)="onFilterOpened($event)" style="width: 100%; height: auto;">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <div class="row bg-white p-2 mt-0">
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+          class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="30">30</option>
+        </select>
+      </div>
+  
+      <div class="col-md-8">
+        <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+          [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+          class="d-flex justify-content-end align-right">
+        </ngb-pagination>
+      </div>
+  
+    </div>
+  </div>
+<!-- 
+  <app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+    <app-service-view (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+      [onMerchantMId]="BlockedmerchantSelectEvent" [onMerchantAdd]="AddmerchantSelectEvent"></app-service-view>
+  </app-modal> -->
+
+  

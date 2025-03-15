@@ -1,0 +1,223 @@
+<!-- <p>{{this.data | json}}</p> -->
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Auth ID</th>
+            <th scope="col">Txn_ID</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Merch_Order_No</th>
+            <th scope="col">Merch_Email_ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{this.data?.MID}}</th>
+            <td>{{this.data?.Txn_Id}}</td>
+            <td>{{this.data?.Amount}}</td>
+            <td>{{this.data?.Mer_Ord_No}}</td>
+            <td>{{this.data?.Merchant_Email_ID}}</td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="card">
+
+        <div class="tab-content mt-3" id="lineTabContent">
+            <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+                <div class="card-header row">
+                    <div class="col">
+                        <!-- <h4>Transaction Details</h4>  -->
+                    </div>
+                    <!-- <div class="col text-end">
+                <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+                  Bulk Upload
+                </button>
+              </div> -->
+                </div>
+
+                <div class="card-body bg-white">
+                    <form [formGroup]="chargeBackRaiseForm">
+
+                        <div class="row">
+
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bank's ChargeBack Id <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="ChargeBackID"
+                                        placeholder="Bank's ChargeBack Id" type="text" autocomplete="new-password" id="bankId"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('ChargeBackID')?.errors}"
+                                        (keypress)="OnlyCharacterNumberAllowed($event)">
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('ChargeBackID')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Bank's ChargeBack ID
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Remarks <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="Remarks"
+                                        placeholder="Remarks" type="text" autocomplete="new-password"
+                                        id="bankId"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('Remarks')?.errors}">
+
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('Remarks')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Remarks
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bank Cut-Off Date <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" id="BankCutOffDate" type="date"
+                                        formControlName="BankCutOffDate" placeholder="Bank Cut-Off Date"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('BankCutOffDate')?.errors}" />
+
+
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('BankCutOffDate')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Select Bank Cut-Off Date
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Merchant Cut-Off Date <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" id="MerchantCutOffDate" type="date"
+                                        formControlName="MerchantCutOffDate" placeholder="Merchant Cut-Off Date"
+                                        [ngClass]="{'is-invalid': isForm1Submitted && chargeBackRaiseForm.get('MerchantCutOffDate')?.errors}" />
+
+                                    <div *ngIf="isForm1Submitted && chargeBackRaiseForm.get('MerchantCutOffDate')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Select Merchant Cut-Off Date
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email ID(s)</label>
+                                    <input class="form-control" id="emailId" type="email" class="form-control"
+                                        formControlName="emailId" placeholder="Email ID" />
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bank Debit Type</label>
+                                    <!-- <input class="form-control" id="MerchantCutOffDate" type="date" class="form-control"
+                                        formControlName="MerchantCutOffDate" placeholder="Merchant Cut-Off Date"
+                                        /> -->
+                                    <ng-select placeholder="Bank Debit Type" id="MerchantCutOffDate"
+                                        formControlName="BankDebitType" [items]="this.UpfrontNonUpfront"
+                                        bindLabel="FieldText" bindValue="FieldValue">
+
+                                    </ng-select>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Merchant Debit Type</label>
+                                    <ng-select placeholder="Merchant Debit Type" id="MerchantDebitType"
+                                        formControlName="MerchantDebitType" [items]=" this.MerchUpfrontNonUpfront"
+                                        bindLabel="FieldText" bindValue="FieldValue">
+
+                                    </ng-select>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Upload File</label>
+                                    <input class="form-control" id="MerchantCutOffDate" type="file" multiple
+                                        class="form-control" formControlName="file" placeholder="Merchant Cut-Off Date"
+                                        (change)='onFileSelect($event)' />
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <!-- <div class="col-md-2">
+                                <button type="button" class="form-control btn btn-danger pull-right"
+                                    (click)="resetform()">Reset
+                                </button>
+                            </div> -->
+                            <div class="col-md-2">
+
+                                <button class="form-control btn btn-primary pull-right" type="submit"
+                                    (click)="onSubmit(chargeBackRaiseForm.value)" [disabled]="this.loading">
+                                    <span id="loading" role="status" aria-hidden="true"></span>
+                                    Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</div>

@@ -1,0 +1,214 @@
+<!-- <p>bank-statement works!</p> -->
+
+<div class="card">
+    <div class="card-header">
+        <h4>Bank Statement</h4>
+    </div>
+
+    <div class="card-body">
+
+        <form [formGroup]="bankStatmentForm" (ngSubmit)="onSubmit(bankStatmentForm.value)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">Transaction Type  <span aria-hidden="true" class="symbol required"
+                            style="color:red;">*</span></label>
+
+                        <ng-select placeholder=" Select Transaction Type" id="type" formControlName="transactiontype"
+                            [items]="types" bindLabel="FieldText" bindValue="FieldValue" [inputAttrs]="{maxlength:'50'}"
+                            [ngClass]="{'is-invalid': submitForm1 && bankStatmentForm.get('transactiontype')?.errors}">
+
+                        </ng-select>
+
+                        <div *ngIf="submitForm1 && bankStatmentForm.get('transactiontype')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Transaction Type
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">From Date <span aria-hidden="true" class="symbol required"
+                                style="color:red;">*</span></label>
+                        <input class="form-control" id="searchFromDate" type="date" class="form-control"
+                            formControlName="FromDate" placeholder="From Date"
+                            [ngClass]="{'is-invalid': submitForm1 && bankStatmentForm.get('FromDate')?.errors}"
+                            min="{{pastDate|date:'yyyy-MM-dd'}}" [max]="getToday()" />
+
+
+
+                        <div *ngIf="submitForm1 && bankStatmentForm.get('FromDate')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Valid From Date
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">To Date <span aria-hidden="true" class="symbol required"
+                                style="color:red;">*</span></label>
+                        <input class="form-control" id="searchToDate" type="date" class="form-control"
+                            formControlName="ToDate" placeholder="To Date"
+                            [ngClass]="{'is-invalid': submitForm1 && bankStatmentForm.get('ToDate')?.errors}"
+                            min="{{pastDate|date:'yyyy-MM-dd'}}" [max]="getToday()" />
+
+
+                        <div *ngIf="submitForm1 && bankStatmentForm.get('ToDate')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Valid To Date
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-2">
+                    <button type="button" class="form-control btn btn-danger pull-right" (click)="resetform()">Reset
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button class="form-control btn btn-primary pull-right" type="submit" [disabled]="this.loading">
+                        <span id="loading" role="status" aria-hidden="true"></span>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="card mt-3" style="overflow:auto;" *ngIf=" this.showgrid">
+
+            <h4 class="p-3">Account Balances</h4>
+            <!-- {{this.data|json}}   -->
+            <!-- {{this.key|json}} -->
+            <!-- {{this.transactionSummary|json}} -->
+            <!-- {{this.accountBalances|json}} -->
+            <!-- {{Balances|json}}  -->
+            <!-- {{propertyNames|json}} -->
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">{{propertyNames[0]}}</th>
+                        <th scope="col">{{propertyNames[1]}}</th>
+                        <th scope="col">{{propertyNames[2]}}</th>
+                        <th scope="col">{{propertyNames[3]}}</th>
+                        <th scope="col">{{propertyNames[4]}}</th>
+                        <th scope="col">{{propertyNames[5]}}</th>
+                        <th scope="col">{{propertyNames[6]}}</th>
+                        <th scope="col">{{propertyNames[7]}}</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{Balances?.acid }}</td>
+                        <td>{{ Balances?.availableBalance.amountValue }} {{ Balances?.availableBalance?.currencyCode}}</td>                     
+                        <td>{{Balances?.branchId}}</td>
+                        <td>{{ Balances?.currencyCode}}</td>
+                        <td>{{ Balances?.fFDBalance.amountValue }} {{ Balances?.fFDBalance?.currencyCode}}</td>  
+                        <td>{{ Balances?.floatingBalance.amountValue }} {{ Balances?.floatingBalance?.currencyCode }}</td>                   
+                        <td>{{ Balances?.ledgerBalance.amountValue }} {{ Balances?.ledgerBalance?.currencyCode }}</td>
+                        <td>{{ Balances?.userDefinedBalance.amountValue }} {{ Balances?.userDefinedBalance?.currencyCode}}</td>                     
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <div class="card mt-3" style="overflow:auto;" *ngIf=" this.showgrid">
+
+            <h4 class="p-3">Transaction Details</h4>
+            <!-- {{this.data|json}}   -->
+            <!-- {{this.key|json}} -->
+            <!-- {{this.transactionSummary|json}} -->
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">{{key[0]}}</th>
+                        <th scope="col">{{key[2]}}</th>
+                        <!-- <th scope="col">{{key[3]}}</th> -->
+                        <th scope="col">{{key[4]}}</th>
+                        <!-- <th scope="col">{{key[5]}}</th>
+                        <th scope="col">{{key[6]}}</th> -->
+                        <!-- <th scope="col">{{key[1]}}</th> -->
+                         
+                                <!-- <th scope="col">{{transactionSummary[0]}}</th> -->
+                                <th scope="col">{{transactionSummary[1]}}</th>
+                                <th scope="col">{{transactionSummary[2]}}</th>
+                                <th scope="col">{{transactionSummary[3]}}</th>
+                                <th scope="col">{{transactionSummary[4]}}</th>
+                                <!-- <th scope="col">{{transactionSummary[5]}}</th> -->
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let transaction of this.pagedItems">
+                        <td>{{ transaction.pstdDate }}</td>
+                        <td>{{ transaction.txnBalance.amountValue }} {{
+                            transaction.txnBalance.currencyCode }}</td>
+                        <!-- <td>{{ transaction.txnCat }}</td> -->
+                        <td>{{ transaction.txnId }}</td>
+                        <!-- <td>{{ transaction.txnSrlNo }}</td>
+                        <td>{{ transaction.valueDate}}</td> -->
+                        <!-- <td>{{ transaction?.transactionSummary?.instrumentId }}</td> -->
+                        <td>{{ transaction?.transactionSummary?.txnAmt?.amountValue }} {{
+                            transaction.transactionSummary.txnAmt.currencyCode }}</td>
+                        <td>{{ transaction?.transactionSummary?.txnDate }}</td>
+                        <td>{{ transaction?.transactionSummary?.txnDesc }}</td>
+                        <td>{{ transaction?.transactionSummary?.txnType }}</td>
+                        <!-- <td
+                            *ngIf="getKey(transaction.transactionSummary.addtnlData).length>0">
+                            {{ transaction?.transactionSummary?.addtnlData|json}}</td> -->
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="row">
+            <div class="col-10 p-3  ">
+                <ngb-pagination
+                [(page)]="currentPage"
+                [pageSize]="itemsPerPage"
+                [collectionSize]="totalItems"
+              ></ngb-pagination>
+            </div>
+<div for="pageSizeSelect" class="form-label col-1 mt-2 p-3">Page Size:</div>
+            <div class="page-size-dropdown col-1 p-3">
+                <!-- <label for="pageSizeSelect" class="form-label">Page Size:</label> -->
+                <select id="pageSizeSelect" class="form-select w-10" [(ngModel)]="itemsPerPage">
+                  <option *ngFor="let size of pageSizes" [ngValue]="size">{{ size }}</option>
+                </select>
+              </div>
+          </div>
+
+        </div>
+    </div>
+
+ 
+
+
+</div>

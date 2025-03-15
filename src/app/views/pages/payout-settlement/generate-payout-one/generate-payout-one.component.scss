@@ -1,0 +1,5 @@
+
+.text-body {
+    --bs-text-opacity: auto!important;
+    color: rgba(var(--bs-body-color-rgb), var(--bs-text-opacity)) !important;
+}

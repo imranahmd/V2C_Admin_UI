@@ -1,0 +1,30 @@
+<p class="text-muted mb-1 mb-md-0">&nbsp; Transaction ID : {{this.TransactionData}}</p>
+&nbsp;
+<div class="row" style="min-height: 300px" >
+    <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+      <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+        class="ag-theme-alpine" [rowData]="rowData" (gridReady)="onGridReady($event)"
+        (firstDataRendered)="dataRendered($event)" [paginationPageSize]="pageSize" [pagination]="true"
+        [rowSelection]="'single'" [suppressPaginationPanel]="true" 
+        
+        style="width: 100%; height: auto;">
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="row bg-white p-2 mt-0">
+    <div class="col-md-4">
+      <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+        class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+      </select>
+    </div>
+    <div class="col-md-8">
+      <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+        [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+        class="d-flex justify-content-end align-right">
+      </ngb-pagination>
+    </div>
+  </div>
+  

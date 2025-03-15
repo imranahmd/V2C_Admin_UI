@@ -1,0 +1,56 @@
+<!-- <p>atom-refund works!</p> -->
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+            <h6 class="card-title">Atom Refund</h6>
+
+          <form [formGroup]="atomRefundForm">
+            <div class="main__title col s12 mb-3">
+                <i class="fa fa-file" aria-hidden="true" style="color:grey"></i> <a
+                    href="assets/bulk_refund.xlsx"> Click
+                    Here To Download Sample File For Your Reference <i class="feather text-primary icon-download-cloud"></i></a>
+            </div>
+            <div>
+                <h5>Notes</h5>
+                <p>Step 1: Download the sample file from above link </p>
+                <p>Step 2: Fill in the details as per your requirement</p>
+                <p>Step 3: Please ensure the data is correctly entered before uploading the final sheet.</p>
+            </div>
+  
+            <!-- <div class="mb-3 mt-2">
+  
+                <input  class="form-control" type="file" id="formFile" formControlName="file" (change)='onFileSelect($event)' [ngClass]="{'is-invalid': isForm1Submitted && form1.file.errors}">
+                
+                     <div *ngIf="isForm1Submitted && form1.file.errors?.required" class="invalid-feedback">
+                      Please select Document
+                    </div> 
+            </div> -->
+
+            <div class="mb-3 mt-2">
+  
+              <input  class="form-control" type="file" id="formFile" formControlName="file" (change)='onFileSelect($event)' 
+               [ngClass]="{'is-invalid': isForm1Submitted && atomRefundForm.get('file')?.errors}">
+              <!-- <label class="form-label" for="formFile">Please select
+                  Document</label> -->
+                  <div  class="invalid-feedback" *ngIf="isForm1Submitted && atomRefundForm.get('file')?.errors?.required"
+                  class="invalid-feedback">
+                    Please select Document
+                  </div>
+          </div>
+
+
+
+            <div class="">
+                <button class="btn btn-primary" type="submit" (click)="uploadAtomRefund()">Upload</button>
+            </div>
+            <!-- <div class="col-md-1"> <button class="btn btn-secondary" (click)="onVerify()" type="button">Verify</button>
+      </div> -->
+  
+            <br>
+  
+  
+        </form></div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,36 @@
+.ng-select-disabled > .ng-value-label {
+  padding: 0 5px;
+  color: black !important;
+}
+
+.ng-select-disable {
+  .ng-value-label {
+    padding: 0 5px;
+    color: black !important;
+  }
+}
+
+.ng-select .ng-select-multiple .ng-select-disabled {
+  .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    padding: 0 5px;
+    color: black !important;
+  }
+}
+
+.customer-merchant-select {
+  .ng-value-label {
+    color: red !important;
+  }
+}
+.zoom:hover {
+  -ms-transform: scale(3.2); /* IE 9 */
+  -webkit-transform: scale(3.2); /* Safari 3-8 */
+  transform: scale(3.2); 
+  transition: transform .5s ease;
+}
+.zoom {
+  -ms-transform: scale(1.0); /* IE 9 */
+  -webkit-transform: scale(1.0); /* Safari 3-8 */
+  transform: scale(1.0); 
+  transition: transform .2s ease;
+}

@@ -1,0 +1,254 @@
+<div class="row">
+    <div class="card">
+
+        <div class="tab-content mt-3" id="lineTabContent">
+            <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+                <div class="card-header row">
+                    <div class="col">
+                        <h4>User Master</h4>
+                    </div>
+
+                </div>
+
+                <div class="card-body bg-white">
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+                        <div class="row">
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">User ID <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="UserID" placeholder="User ID"
+                                        type="text" autocomplete="new-password" id="UserID" maxlength="100"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('UserID')?.errors}"
+                                        (keypress)="OnlyCharacterNumberAllowed($event)">
+
+                                    <div *ngIf="isSubmitted && userForm.get('UserID')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter User Id
+                                    </div>
+
+                                    <div *ngIf="isSubmitted && userForm.get('UserID')?.errors?.pattern"
+                                        class="invalid-feedback">
+                                        Please Enter Valid User Id
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">User Full Name <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="UserName" placeholder="User Name"
+                                        type="text" autocomplete="new-password" id="UserName" maxlength="100"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('UserName')?.errors}">
+
+                                    <div *ngIf="isSubmitted && userForm.get('UserName')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter User Name
+                                    </div>
+
+                                    <div *ngIf="isSubmitted && userForm.get('UserName')?.errors?.pattern"
+                                        class="invalid-feedback">
+                                        Please Enter Valid User Name
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Email ID <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="EmailId" placeholder="Email ID"
+                                        type="text" autocomplete="new-password" id="EmailId" maxlength="100"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('EmailId')?.errors}">
+
+                                    <div *ngIf="isSubmitted && userForm.get('EmailId')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Email ID
+                                    </div>
+
+                                    <div *ngIf="isSubmitted && userForm.get('EmailId')?.errors?.pattern"
+                                        class="invalid-feedback">
+                                        Please Enter Valid Email ID
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Number <span aria-hidden="true"
+                                            class="symbol required" style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="ContactNo" placeholder="Contact Number"
+                                        type="text" autocomplete="new-password" id="ContactNo" maxlength="10"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('ContactNo')?.errors}"
+                                        (keypress)="OnlyNumbersAllowed($event)">
+
+                                    <div *ngIf="isSubmitted && userForm.get('ContactNo')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Contact Number
+                                    </div>
+
+                                    <div *ngIf="isSubmitted && userForm.get('ContactNo')?.errors?.pattern"
+                                        class="invalid-feedback">
+                                        Please Enter Valid Contact Number
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Role <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+
+                                    <ng-select placeholder="Role" id="Role" formControlName="Role"
+                                        [items]="this.dropdownlist" bindLabel="RoleName" bindValue="RoleID"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('Role')?.errors}">
+
+                                    </ng-select>
+
+                                    <div *ngIf="isSubmitted && userForm.get('Role')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Select Role
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Password <span aria-hidden="true" class="symbol required"
+                                            style="color:red;">*</span></label>
+                                    <input class="form-control" formControlName="Password" placeholder="Password"
+                                        type="password" autocomplete="new-password" id="Password" maxlength="100"
+                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                        [ngClass]="{'is-invalid': isSubmitted && userForm.get('Password')?.errors}">
+
+                                    <div *ngIf="isSubmitted && userForm.get('Password')?.errors?.required"
+                                        class="invalid-feedback">
+                                        Please Enter Password
+                                    </div>
+
+                                    <div *ngIf="isSubmitted && userForm.get('Password')?.errors?.pattern"
+                                        class="invalid-feedback">
+                                        Password must contain at least one number and one uppercase and lowercase letter
+                                        and one special character from !@#$%^&*_- and at least 8 characters.
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <button type="button" class="form-control btn btn-danger pull-right"
+                                    (click)="resetform()">Reset
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="form-control btn btn-primary pull-right" type="submit"
+                                    [disabled]="this.loading">
+                                    <span id="loading" role="status" aria-hidden="true"></span>
+                                    Add New
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+<div>
+    <div class="row mb-md-2 mt-2">
+        <div class="col-xl-10 main-content">
+            <!-- <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i
+            class="feather icon-download"></i>
+        </button> -->
+            <div class="btn-group" ngbDropdown role="group">
+                <button class="btn btn-primary" ngbDropdownToggle></button>
+                <div ngbDropdownMenu class="ng-dropdown-panel-items p-1"
+                    style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+                    <div class="form-group">
+                        <!--            <label for="columns" class="form-label"> All Columns <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>-->
+                        <div *ngIf="columnDefs" class="list-group ng-option">
+                            <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                                <label class="list-group-item p-2">
+                                    <input class="form-check-input me-1" type="checkbox" value="{{i}}"
+                                        name="{{column.headerName}}" (change)="updateSelectedTimeslots($event)"
+                                        [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')">
+                                    {{column?.field?.replace('_',' ')?.replace('_',' ')?.replace('_',' ') | uppercase }}
+                                </label>
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="row" style="min-height:400px">
+        <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+            <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+                class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+                (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true"
+                [rowSelection]="'single'" [suppressPaginationPanel]="true" (filterChanged)="onFilterChange($event)"
+                (filterModified)="onFilterModified($event)" (filterOpened)="onFilterOpened($event)"
+                style="width: 100%; height: auto;">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div class="row bg-white p-2 mt-0">
+        <div class="col-md-4">
+            <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="30">30</option>
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                class="d-flex justify-content-end align-right">
+            </ngb-pagination>
+        </div>
+
+    </div>
+</div>

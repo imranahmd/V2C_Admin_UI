@@ -1,0 +1,63 @@
+<!-- <p>service-provider works!</p> -->
+<div class="row">
+    <div class="card">
+  
+      <div class="tab-content mt-3" id="lineTabContent">
+        <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+          <div class="card-header row">
+            <div class="col">
+              <h4>Recharge List
+              </h4>
+            </div>
+  
+          </div>
+  
+          
+        </div>
+  
+      </div>
+  
+  
+  
+  
+  
+    </div>
+  </div>
+
+  <div  >
+    <div class="row" style="min-height: 500px">
+      <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+        <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+          class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+          (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true" [rowSelection]="'single'"
+          [suppressPaginationPanel]="true"  (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+          (filterOpened)="onFilterOpened($event)" style="width: 100%; height: auto;">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <div class="row bg-white p-2 mt-0">
+      <div class="col-md-4">
+        <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+          class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="30">30</option>
+        </select>
+      </div>
+  
+      <div class="col-md-8">
+        <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+          [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+          class="d-flex justify-content-end align-right">
+        </ngb-pagination>
+      </div>
+  
+    </div>
+  </div>
+
+  <app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+    <app-recharge-list-view (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+      [onMerchantMId]="BlockedmerchantSelectEvent" [onMerchantAdd]="AddmerchantSelectEvent"></app-recharge-list-view>
+  </app-modal>
+
+  

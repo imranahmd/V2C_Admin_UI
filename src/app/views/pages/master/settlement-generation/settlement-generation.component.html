@@ -1,0 +1,194 @@
+<div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h4>Settlement Claim Report</h4>
+      </div>
+      <div class="card-body bg-white">
+        <form (ngSubmit)="onSubmit(refundListFilter.value)" [formGroup]="refundListFilter">
+  
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label class="form-label">Service Provider <span aria-hidden="true" class="symbol required"
+                                                            style="color:red;">*</span></label>
+                <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+                <ng-select formControlName="spId" (click)="seletservice($event)"
+                           [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('spId')?.errors}"
+                           placeholder="Service Provider" id="spId" (focus)="fun('spId')"
+                           (focusout)="funover('spId')"   >
+                  <ng-option id="selectedOption" *ngFor="let merchant of Resdata" [value]="merchant.FieldValue">
+                    {{merchant.FieldText}}
+                  </ng-option>
+                </ng-select>
+                <div *ngIf="isForm1Submitted && refundListFilter.get('spId')?.errors?.required" class="invalid-feedback">
+                  Please Select Service Provider
+                </div>
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-3">
+            
+              <div class="mb-3">
+                <label class="form-label">Instrument<span aria-hidden="true" class="symbol required"
+                                                            style="color:red;">*</span></label>
+                <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+                <ng-select formControlName="InstrumentId" (change)="selectinstrument($event)"
+                           [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('InstrumentId')?.errors}"
+                           placeholder="Instrument" id="InstrumentId" (focus)="fun('InstrumentId')"
+                           (focusout)="funover('InstrumentId')"  >
+                  <ng-option id="selectedOption" *ngFor="let merchant of Resdatas" [value]="merchant.FieldValue">
+                   {{merchant.FieldText}}
+                  </ng-option>
+                </ng-select>
+                <div *ngIf="isForm1Submitted && refundListFilter.get('InstrumentId')?.errors?.required" class="invalid-feedback">
+                  Please Select Instrument
+                </div>
+              </div>
+            </div>
+              
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label class="form-label">Cycle<span aria-hidden="true" class="symbol required"
+                                                            style="color:red;">*</span></label>
+                <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+                <ng-select formControlName="Cycle"
+                           [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('Cycle')?.errors}"
+                           placeholder="Cycle" id="Cycle" (focus)="fun('Cycle')"
+                           (focusout)="funover('Cycle')">
+                  <ng-option id="selectedOption" *ngFor="let merchant of Resbank" [value]="merchant.FieldValue">
+                    {{merchant.FieldText}}
+                  </ng-option>
+                </ng-select>
+                <div *ngIf="isForm1Submitted && refundListFilter.get('Cycle')?.errors?.required" class="invalid-feedback">
+                  Please Select Cycle
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="mb-3">
+                <label class="form-label">Settlement Date</label>
+                <input [(ngModel)]="searchFromDate" class="form-control" id="ReconDate" type="date"
+                       [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('ReconDate')?.errors}" class="form-control"
+                       formControlName="ReconDate" placeholder="Settlement Date"/>
+                <div *ngIf="isForm1Submitted && refundListFilter.get('ReconDate')?.errors?.required" class="invalid-feedback">
+                  Please Select Settlement Date
+                </div>
+              </div>
+  
+  
+            </div>
+  
+       
+          </div>
+  
+          <!-- <div class="row mb-2">
+            <div class="col-xs-12">
+              <div class="text-end">
+                <button class="btn btn-primary pull-right" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-2">
+              <button type="button" class="form-control btn btn-danger pull-right" (click)="reset($event)">Reset
+              </button>
+            </div>
+            <div class="col-md-2">
+              <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+              <button
+                class="form-control btn btn-warning pull-right" [disabled]="this.loading" type="submit">
+                <span  id="loading" role="status" aria-hidden="true"></span>
+                Search
+              </button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="form-control btn btn-primary pull-right" [disabled]="this.loading" (click)="onGenerate(refundListFilter.value)">
+                <span  id="gloading" role="status" aria-hidden="true"></span>
+                Generate
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- <button (click)="dataSubmit(allBooksFormGroup.value)">
+  submit data</button> -->
+    </div>
+  </div>
+  
+ 
+  
+  <div class="row mb-md-2 mt-2" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+    <div class="col-xl-10 main-content">
+      <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i class="feather text-primary icon-download"></i>
+      </button>
+    
+      <div class="btn-group">
+        <!-- <button class="btn btn-warning" type="button" (click)="updateRefund()" [disabled]="!isRaiseRefBtnDisable()">
+          Raise Refund
+        </button> -->
+      </div>
+  
+    </div>
+    <!-- <div class="col-xl-2">
+      <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" class="form-control" id="typeahead-basic"
+             placeholder="Search" type="text" autocomplete="new-password"/>
+    </div> -->
+  </div>
+  
+  <div class="row" style="min-height: 300px" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+    <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+      <ag-grid-angular
+        [enableCellTextSelection]=true
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        (gridReady)="onGridReady($event)"
+        (firstDataRendered)="dataRendered($event)"
+        [paginationPageSize]="pageSize"
+        [pagination]="true"
+        [rowSelection]="'single'"
+        [suppressPaginationPanel]="true"
+        style="width: 100%; height: auto;"
+      >
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="row bg-white p-2 mt-0" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+    <div class="col-md-4">
+      <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+              class="form-select d-flex justify-content-end col-4"
+              name="pageSize" style="width: auto">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+      </select>
+    </div>
+  
+    <div class="col-md-8">
+      <ngb-pagination
+        (pageChange)="onPaginationChange($event)"
+        [(page)]="currentPage"
+        [boundaryLinks]="true"
+        [collectionSize]="collectionSize"
+        [maxSize]="5"
+        [pageSize]="pageSize"
+        [rotate]="true"
+        class="d-flex justify-content-end align-right">
+      </ngb-pagination>
+    </div>
+  
+  </div>
+  

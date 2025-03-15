@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="card">
+        <div class="text-end" style="margin-right: 5%;margin-top: 1%;">
+            <h6>Current Status : {{ this.ID}}</h6></div>
+        <div class="card-body bg-white">
+            <form [formGroup]="serviceForm">
+                <div class="row">
+
+
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">Auth ID </label>
+                            <input class="form-control" id="merchant_id" type="text" class="form-control" readonly
+                                formControlName="merchant_id" placeholder="Auth ID"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('merchant_id')?.errors}"
+                                maxlength="100" />
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('merchant_id')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Auth ID
+                            </div>
+                          
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">PG Transaction ID  </label>
+                            <input class="form-control" id="account_no" type="text" class="form-control" readonly
+                                formControlName="account_no" placeholder="PG Transaction ID"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('account_no')?.errors}"
+                                maxlength="50" />
+                            <div *ngIf="isForm1Submitted && serviceForm.get('account_no')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter PG Transaction ID
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                  
+
+                     
+
+                
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">Merchant Transaction ID</label>
+                            <input class="form-control" id="txn_id" type="text" class="form-control" readonly
+                                placeholder="Merchant Transaction ID" formControlName="txn_id" maxlength="100"
+                                 />
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">Transaction Amount</label>
+                            <input class="form-control" id="amount" type="text" class="form-control" readonly
+                                placeholder="Transaction Amount" formControlName="amount" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" />
+                        </div>
+
+
+                    </div>
+                  
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label"> VPA</label>
+                            <input class="form-control" id="isApproved" type="text" class="form-control" readonly
+                                formControlName="isApproved" placeholder="VPA"
+                                maxlength="50" />
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">Process ID</label>
+                            <input class="form-control" id="IPAddress" type="text" class="form-control" readonly
+                                formControlName="IPAddress" placeholder="Process ID" />
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label class="form-label">UTR Number</label>
+                            <input class="form-control" id="utr_no" type="text" class="form-control"  
+                                placeholder="UTR Number" formControlName="utr_no" maxlength="100"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('utr_no')?.errors}" />
+                                 <div *ngIf="isForm1Submitted && serviceForm.get('utr_no')?.errors?.required"
+                                 class="invalid-feedback">
+                                 Please Enter UTR Number
+                             </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-4">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Transaction Status</label>
+                            <ng-select placeholder="Transaction Status" id="status" formControlName="status"
+                            (keydown)="NoDoubleSpace($event)"  (focus)="fun('status')" (focusout)="funover('status')"
+                            [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('status')?.errors}"
+                            (keypress)="OnlyCharacterNumberAllowed($event)" maxlength="500">
+                            <ng-option id="selectedOption" 
+                                value="Ok">
+                                Success
+                            </ng-option>
+                            <ng-option id="selectedOption" 
+                                value="F">
+                                Failed
+                            </ng-option>
+                        </ng-select> 
+                        <div *ngIf="isForm1Submitted && serviceForm.get('status')?.errors?.required"
+                        class="invalid-feedback">
+                        Please Select Transaction Status
+                    </div>
+                        </div>
+
+
+                    </div>
+                    
+                     <!-- <div class="col-sm-8">
+                        <div class="mb-3">
+                            <label class="form-label">Transaction status <span aria-hidden="true"
+                                class="symbol required" style="color:red;">*</span></label>
+                            <textarea class="form-control" id="remark" formControlName="remark" placeholder="Transaction status"
+                            [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('remark')?.errors}" ></textarea>
+                                <div *ngIf="isForm1Submitted && serviceForm.get('remark')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Transaction status
+                            </div>
+                        </div>
+
+
+                    </div>  -->
+
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-primary pull-right"
+                            (click)="onGenerate(serviceForm.value,'A')">
+                            <span id="gloading" role="status" aria-hidden="true"></span>
+                            Submit
+                        </button>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-danger pull-right"
+                            (click)="onGenerate(serviceForm.value,'R')">
+                            <span id="rloading" role="status" aria-hidden="true"></span>
+                            Reject
+                        </button>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,36 @@
+
+<div class="row">
+    <div class="card">
+
+        <ul class="nav nav-tabs nav-tabs-line" id="lineTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active"   (click)="cycle()" id="home-line-tab" data-bs-toggle="tab" role="tab" aria-controls="home"
+                aria-selected="true">Add Bank Mapper </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " (click)="bulk()" id="profile-line-tab" data-bs-toggle="tab" role="tab" aria-controls="profile"
+                aria-selected="false">Add Bank Category Mapper</a>
+            </li>
+      
+          </ul>
+  
+      <div class="tab-content mt-3" id="lineTabContent">
+        <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+      <!-- <app-service-provider-mapping></app-service-provider-mapping> -->
+      <app-back-add-mapper></app-back-add-mapper>
+    
+        </div>
+  
+
+        <div class="tab-pane fade" id="profile" #profile role="tabpanel" aria-labelledby="profile-line-tab">
+        <app-bank-category-mapper></app-bank-category-mapper>
+        </div>
+      </div>
+  
+  
+  
+  
+  
+    </div>
+  </div>
+ 

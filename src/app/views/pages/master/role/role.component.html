@@ -1,0 +1,167 @@
+<!-- <p>role works!</p> -->
+<div class="row">
+  <div class="card">
+
+    <div class="tab-content mt-3" id="lineTabContent">
+      <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+        <div class="card-header row">
+          <div class="col">
+            <h4>Add Role
+            </h4>
+          </div>
+
+        </div>
+
+        <div class="card-body bg-white">
+          <form [formGroup]="addRoleForm">
+            <div class="row">
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Role Name <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input autocomplete="new-password" class="form-control" formControlName="roleName" id="Payid"
+                    placeholder="Role Name" type="text" maxlength="40"  (keypress)="OnlyCharacterNumberAllowed($event)"
+                    [ngClass]="{'is-invalid': submit1 && addRoleForm.get('roleName')?.errors}">
+
+                  <div *ngIf="submit1 && addRoleForm.get('roleName')?.errors?.required" class="invalid-feedback">
+                    Please Enter Role Name
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Role Description <span aria-hidden="true" class="symbol required"
+                      style="color:red;">*</span></label>
+                  <input autocomplete="new-password" class="form-control" formControlName="roleDescription"
+                    id="Payid" placeholder="Role Description" type="text" maxlength="40"
+                    [ngClass]="{'is-invalid': submit1 && addRoleForm.get('roleDescription')?.errors}">
+
+                    <div *ngIf="submit1 && addRoleForm.get('roleDescription')?.errors?.required" class="invalid-feedback">
+                      Please Enter Role Description
+                    </div>
+
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Status <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+                  <ng-select placeholder="Status" id="Status" formControlName="Status" [items]="Status"
+                    bindLabel="FieldText" bindValue="FieldValue"
+                    [ngClass]="{'is-invalid': submit1 && addRoleForm.get('Status')?.errors}">
+                  </ng-select>
+                  <div *ngIf="submit1 && addRoleForm.get('Status')?.errors?.required" class="invalid-feedback">
+                    Please Select Status
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-2">
+                <button type="button" class="form-control btn btn-danger pull-right" (click)="reset()">Reset
+                </button>
+              </div>
+              <div class="col-md-2">
+                <button class="form-control btn btn-primary pull-right" (click)="addRole(addRoleForm.value)"
+                  type="submit">
+                  <span id="loading" role="status" aria-hidden="true"></span>
+                  Add Role
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+  </div>
+</div>
+
+<div>
+  <div class="row mb-md-2 mt-2">
+    <div class="col-xl-10 main-content">
+      <!-- <button  class="btn btn-light" type="button">Export CSV<i
+            class="feather icon-download"></i>
+        </button> -->
+      <div class="btn-group" ngbDropdown role="group">
+        <button class="btn btn-primary" ngbDropdownToggle>Columns</button>
+        <div ngbDropdownMenu class="ng-dropdown-panel-items p-1"
+          style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+          <div class="form-group">
+            <!--            <label for="columns" class="form-label"> All Columns <span aria-hidden="true" class="symbol required" style="color:red;">*</span></label>-->
+            <div *ngIf="columnDefs" class="list-group ng-option">
+              <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                <label class="list-group-item p-2">
+                  <input class="form-check-input me-1" type="checkbox" value="{{i}}" name="{{column.headerName}}"
+                    (change)="updateSelectedTimeslots($event)"
+                    [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')">
+                  <!-- {{column?.field?.replace('_',' ')?.replace('_',' ')?.replace('_',' ') | uppercase }} -->
+                  {{(column?.headerName?.replace('_','') || column?.field?.replace('_','') ) }}
+                </label>
+              </span>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <div class="row" style="min-height:450px">
+    <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+      <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+        class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+        (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true" [rowSelection]="'single'"
+        [suppressPaginationPanel]="true" (filterChanged)="onFilterChange($event)" (filterModified)="onFilterModified($event)"
+        (filterOpened)="onFilterOpened($event)" style="width: 100%; height: auto;">
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="row bg-white p-2 mt-0">
+    <div class="col-md-4">
+      <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+        class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="30">30</option>
+      </select>
+    </div>
+
+    <div class="col-md-8">
+      <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+        [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+        class="d-flex justify-content-end align-right">
+      </ngb-pagination>
+    </div>
+
+  </div>
+</div>
+
+<app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+  <app-role-view (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+    [onMerchantMId]="BlockedmerchantSelectEvent" [onMerchantAdd]="AddmerchantSelectEvent"></app-role-view>
+</app-modal>

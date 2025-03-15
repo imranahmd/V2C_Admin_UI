@@ -1,0 +1,73 @@
+<div class="row" style="min-height: 100px">
+  <div class="card">
+
+
+    <div class="card-body">
+
+      <form [formGroup]="merchatstatusform" (ngSubmit)="ResellerStatus(merchatstatusform.value)">
+
+
+        <div class="row">
+
+          <div class="col-sm-12">
+            <div class="mb-12">
+              <label class="form-label">Reseller Status</label>
+              <!-- <input type="text" autocomplete="new-password" formControlName="Status"> -->
+              <select class="form-select" aria-label="Default select example" formControlName="Status"
+                      [ngClass]="{'is-invalid': isForm1Submitted && form1.Status.errors}">
+                      <option [ngValue]="null" [disabled]="true" >Select Reseller Status</option>
+
+                <!-- <option value="">Select Reseller Status</option> -->
+                <option *ngFor="let resellerstatuslist of Resdata" [value]="resellerstatuslist.FieldValue">
+                  {{resellerstatuslist.FieldText}}</option>
+              </select>
+              <div *ngIf="isForm1Submitted && form1.Status.errors?.required" class="invalid-feedback">
+                Please fill this field
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <label for="exampleFormControlTextarea1">Comment</label>
+            <textarea class="form-control" rows="3" formControlName="Remark"
+                      [ngClass]="{'is-invalid': isForm1Submitted && form1.Remark.errors}"></textarea>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.required" class="invalid-feedback">
+              Please fill this field
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3 ">
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-lg btn-primary"
+            [disabled]="this.loading"
+            >
+              <span  id="loading" role="status" aria-hidden="true"></span>
+              Submit</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <input type="date" class="form-control">
+&nbsp;
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Comment</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+
+&nbsp;
+&nbsp;
+<button type="button" class="btn btn-lg btn-primary" >Submit</button>
+&nbsp; -->

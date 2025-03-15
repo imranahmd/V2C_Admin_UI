@@ -1,0 +1,168 @@
+<!-- <div >
+    
+    <div class="row mb-md-2 mt-2">
+        <div class="col-xl-10 main-content">
+
+
+            <div class="btn-group" ngbDropdown role="group">
+                <button class="btn btn-primary" ngbDropdownToggle></button>
+                <div ngbDropdownMenu class="ng-dropdown-panel-items p-1"
+                    style="height: 250px;width: 250px; overflow: scroll; scroll-behavior: smooth">
+                    <div class="form-group">
+
+                        <div *ngIf="columnDefs" class="list-group ng-option">
+                            <span *ngFor="let column of columnDefs; let i = index" class="checkbox">
+                                <label class="list-group-item p-2">
+                                    <input class="form-check-input me-1" type="checkbox" value="{{i}}"
+                                        name="{{column.headerName}}" (change)="updateSelectedTimeslots($event)"
+                                        [checked]="(tableSelectedColumn && (-1 !==tableSelectedColumn.indexOf(column)) ? 'checked': '')">
+                                    {{column?.field?.replace('_',' ')?.replace('_',' ')?.replace('_',' ') | uppercase }}
+                                </label>
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="row" style="min-height:400px">
+        <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+            <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+                class="ag-theme-alpine" [rowData]="rowData" (firstDataRendered)="dataRendered($event)"
+                (gridReady)="onGridReady($event)" [paginationPageSize]="pageSize" [pagination]="true"
+                [rowSelection]="'single'" [suppressPaginationPanel]="true" (filterChanged)="onFilterChange($event)"
+                (filterModified)="onFilterModified($event)" (filterOpened)="onFilterOpened($event)"
+                 style="width: 100%; height: auto;">
+            </ag-grid-angular>
+        </div>
+    </div>
+    <div class="row bg-white p-2 mt-0">
+        <div class="col-md-4">
+            <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="30">30</option>
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                class="d-flex justify-content-end align-right">
+            </ngb-pagination>
+        </div>
+
+    </div>
+</div> -->
+<!-- {{this.allviewdata|json}} -->
+<!-- {{this.data}} -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Chargeback Id</th>
+            <th scope="col">Auth ID</th>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">Amount</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ this.allviewdata?.CB_ID}}</td>
+            <td>{{ this.allviewdata?.MerchantId}}</td>
+
+            <td>{{this.transactionId}}</td>
+            <td>{{ this.allviewdata?.TxnAmt}}</td>
+
+        </tr>
+
+
+    </tbody>
+</table>
+<div class="row chat-wrapper">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row position-relative">
+         
+            <div class="col-lg-12 chat-content">
+              <div class="chat-header border-bottom pb-2">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <!-- <i   class="feather icon-corner-up-left icon-md me-2 ms-n2 text-muted d-lg-none"></i>
+                    <figure class="mb-0 me-2">
+                      <img src="https://via.placeholder.com/43x43" class="img-sm rounded-circle" alt="image">
+                      <div class="status online"></div>
+                      <div class="status online"></div>
+                    </figure> -->
+                    <div>
+                        <h5>Conversation</h5>
+                      <!-- <p class="text-muted tx-13">Front-end Developer</p> -->
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
+              <div class="chat-body" [perfectScrollbar]>
+                <ul class="messages" *ngFor="let chat of this.data">
+                  <li class="message-item friend"  *ngIf="chat?.AddedBy=='Admin'">
+                     
+                       <img (click)="download1(chat?.File_name
+                       )" src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/96/228BE6/external-download-video-and-movie-tanah-basah-basic-outline-tanah-basah.png" class="img-xs rounded-circle" alt="avatar" title="{{chat?.File_name}}" *ngIf="chat?.File_name!='No Document'">
+                     <div class="content">
+                        <div class="text-muted">  {{chat?.AddedBy}} </div>
+                        <div class="message">
+                            <div class="bubble">
+                              <p>{{"Status" +":"+ " " +chat?.StatusD
+                                +" "}}</p>
+                            </div>
+                          </div>
+                      <div class="message">
+                        <div class="bubble">
+                          <p>{{"Remark" +":"+ " " +chat?.Admin_Remark
+                        }}</p>
+                        </div>
+                        <span>{{chat?.AddedOn
+                        }}</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="message-item me"  *ngIf="chat?.AddedBy=='Merchant'">
+                    <img (click)="download1(chat?.File_name
+                    )" src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/96/228BE6/external-download-video-and-movie-tanah-basah-basic-outline-tanah-basah.png" class="img-xs rounded-circle" alt="avatar" title="{{chat?.File_name}}" *ngIf="chat?.File_name!='No Document'">
+                    <div class="content">
+                        <div class="text-muted" style="text-align: right!important;">  {{chat?.AddedBy}} </div>
+                      <div class="message">
+                        <div class="bubble">
+                          <p>{{"Status" +":"+ " " +chat?.StatusD
+                            +" "}}</p>
+                        </div>
+                      </div>
+                      <div class="message">
+                        <div class="bubble">
+                          <p>{{"Remark" +":"+ " " +chat?.Merchant_Remark
+                        }}</p>
+                        </div>
+                        <span>{{chat?.AddedOn
+                        }}</span>
+                      </div>
+                    </div>
+                  </li> 
+                </ul>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

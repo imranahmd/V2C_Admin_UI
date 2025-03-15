@@ -1,0 +1,263 @@
+<div class="row">
+    <div class="card">
+        <div class="card-body bg-white">
+            <form [formGroup]="serviceForm">
+
+                <div class="row">
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Merchant Name <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                
+                                         (clear)="refundListFilter.get('merchantId')?.setValue('')"
+" -->
+                            <ng-select placeholder="Merchant Name" id="merchantId" formControlName="MerchantId"
+                            [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('MerchantId')?.errors}"
+                            [inputAttrs]="{maxlength:'200'}" (keydown)="NoDoubleSpace($event)">
+                                <ng-option id="selectedOption" *ngFor="let merchant of Resdata"
+                                    [value]="merchant.MerchantId">
+                                    {{merchant.merchant_name}} ({{merchant.MerchantId}})
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="isForm1Submitted && serviceForm.get('MerchantId')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Merchant Name
+                        </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Service Provider Name <span aria-hidden="true"
+                                    class="symbol required" style="color:red;"> *</span></label>
+                            <!-- <input class="form-control" id="SuccessStatus" type="text" class="form-control"
+                                formControlName="serviceProviderName" placeholder="Service Provider"
+                                -->
+
+                           
+
+                            <ng-select placeholder="Service Provider Name" id="serviceProviderName" formControlName="serviceProviderName"
+                            [items]="this.servicedata" bindLabel="FieldText" bindValue="FieldValue"
+                            [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('serviceProviderName')?.errors}"
+                            [inputAttrs]="{maxlength:'100'}" (keydown)="NoDoubleSpace($event)">
+
+                        </ng-select>
+
+                        <div *ngIf="isForm1Submitted && serviceForm.get('serviceProviderName')?.errors?.required"
+                        class="invalid-feedback">
+                        Please Select Service Provider
+                    </div> 
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Instrument Type <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <ng-select placeholder="Instrument Type" id="Instrument" formControlName="Instruments"
+                                [items]="this.intrumentdata" bindLabel="FieldText" bindValue="FieldValue"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('Instruments')?.errors}"
+                                [inputAttrs]="{maxlength:'100'}" (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('Instruments')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Instrument Type
+                        </div> 
+    
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">PG Bank Name <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <ng-select placeholder="PG Bank Name " id="Banks" formControlName="Banks"
+                                [items]="this.pgdata" bindLabel="bankName" bindValue="bankId"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('Banks')?.errors}"
+                                [inputAttrs]="{maxlength:'100'}" (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+
+                            
+                            <div *ngIf="isForm1Submitted && serviceForm.get('Banks')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select PG Bank Name
+                        </div> 
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Business Category <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <ng-select placeholder="Business Category" id="Category" formControlName="BusinessCategory"
+                                [items]="this.resdata" bindLabel="business_desc" bindValue="category_id"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('BusinessCategory')?.errors}"
+                                [inputAttrs]="{maxlength:'100'}" (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('BusinessCategory')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Select Business Category
+                        </div> 
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Base Rate <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <input class="form-control" id="BaseRate" type="text" class="form-control"
+                                formControlName="BaseRate" placeholder="Base Rate" maxlength="10"
+                                (keypress)="OnlyNumbersAllowed($event)" 
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('BaseRate')?.errors}"/>
+
+                                <div *ngIf="isForm1Submitted && serviceForm.get('BaseRate')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Base Rate
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Enter Min Amount <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <input class="form-control" id=" MinAmount" type="text" class="form-control"
+                                formControlName="MinAmount" placeholder="Min Amount" maxlength="10"
+                              
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('MinAmount')?.errors}"
+                                (keypress)="OnlyNumbersAllowed($event)"/>
+
+                                <div *ngIf="isForm1Submitted && serviceForm.get('MinAmount')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Min Amount
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Enter Max Amount <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <input class="form-control" id="MaxAmount" type="text" class="form-control"
+                                placeholder=" Max Amount" formControlName="MaxAmount" placeholder="Max Amount"
+                                maxlength="10" 
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('MaxAmount')?.errors}"
+                                (keypress)="OnlyNumbersAllowed($event)"/>
+
+                                <div *ngIf="isForm1Submitted && serviceForm.get('MaxAmount')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Max Amount
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">Min MDR Amount <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <input class="form-control" id="MinMDRAmount" type="text" class="form-control"
+                                formControlName="MinMDRAmount" placeholder="Min MDR Amount" maxlength="10"
+                                (keypress)="OnlyNumbersAllowed($event)"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('MinMDRAmount')?.errors}" />
+
+                                <div *ngIf="isForm1Submitted && serviceForm.get('MinMDRAmount')?.errors?.required"
+                                class="invalid-feedback">
+                                Please Enter Min MDR Amount
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">MDR Type <span aria-hidden="true"
+                                class="symbol required" style="color:red;"> *</span></label>
+                            <!-- <input class="form-control" id="MDRType" type="text" class="form-control"
+                                formControlName="MDRType" placeholder="MDR Type" maxlength="50"
+                                (keypress)="OnlyCharacterNumberAllowed($event)" /> -->
+
+                                <ng-select placeholder="MDR Type" id="MDRType" formControlName="MDRType"
+                                [items]="this.mdrtype" bindLabel="FieldText" bindValue="FieldValue"
+                                [ngClass]="{'is-invalid': isForm1Submitted && serviceForm.get('MDRType')?.errors}"
+                                [inputAttrs]="{maxlength:'50'}" (keydown)="NoDoubleSpace($event)">
+
+                            </ng-select>
+
+                            <div *ngIf="isForm1Submitted && serviceForm.get('MDRType')?.errors?.required"
+                            class="invalid-feedback">
+                            Please Enter MDR Type
+                        </div>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-10"></div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="form-control btn btn-primary pull-right"
+                            (click)="onGenerate(serviceForm.value)" [disabled]="this.loading">
+                            <span id="gloading" role="status" aria-hidden="true"></span>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

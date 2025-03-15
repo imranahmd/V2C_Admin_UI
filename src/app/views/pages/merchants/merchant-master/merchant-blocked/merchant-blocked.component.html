@@ -1,0 +1,103 @@
+<div class="row" style="min-height: 100px">
+  <div class="card">
+
+
+    <div class="card-body">
+
+      <form [formGroup]="merchatstatusform" (ngSubmit)="MerchantStatus(merchatstatusform.value)">
+
+
+        <div class="row">
+
+          <div class="col-sm-12">
+            <div class="mb-12">
+              <label class="form-label">Merchant Status</label>
+              <!-- <input type="text" autocomplete="new-password" formControlName="Status"> -->
+              <select class="form-select" aria-label="Default select example" formControlName="Status" placeholder="Select Merchant Status"
+                      [ngClass]="{'is-invalid': isForm1Submitted && form1.Status.errors}">
+                      <option [ngValue]="null" [disabled]="true" >Select Merchant Status</option>
+
+                <!-- <option [selected]="true"  value="" selected disabled>Select Merchant Status</option> -->
+                <option *ngFor="let merchantstatuslist of Resdata" [value]="merchantstatuslist.FieldValue">
+                  {{merchantstatuslist.FieldText}}</option>
+              </select>
+              <div *ngIf="isForm1Submitted && form1.Status.errors?.required" class="invalid-feedback">
+                Please fill this field
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2" hidden>
+          <div class="col-sm-2 form-label" for="file">Upload File </div>
+          <div class="col-sm-6">
+            <!-- <input formControlName="file" class="form-control" type="file" id="formFile" placeholder="Please Select a File"
+             (change)='onFileSelect($event)'  [ngClass]="{'is-invalid': isForm2Submitted && form2.file.errors?.required}"> -->
+            <!-- <button class="btn btn-primary form-control" for="files" (click)="takeInput.click()">
+              Browse
+            </button> -->
+            <button type="button" class="btn btn-primary form-control" for="files" (click)="takeInput.click()">
+              <label>Browse</label>
+            </button>
+            <input type="file" id="StatusFile" #takeInput formControlName="StatusFile"
+                   class="form-control form-control-sm" style="display: none;"
+                   placeholder="Please Select a File" />
+            <div *ngIf="isForm1Submitted && form1.StatusFile.errors?.required" class="invalid-feedback">
+              Please Select File
+            </div>
+            <div *ngIf="this.fileName" class="text-muted small">
+              {{this.fileName}}
+            </div>
+          </div>
+          <div class="col-sm-2 "></div>
+          <div *ngIf="this.fileResponse" class="col-sm-3 zoom">
+            <img [src]="this.inkSource" height="40">
+          </div>
+        </div>
+
+
+        <div class="row mt-2">
+          <div class="col-sm-12">
+            <label for="exampleFormControlTextarea1">Comment</label>
+            <textarea class="form-control" rows="3" formControlName="Remark"
+                      [ngClass]="{'is-invalid': isForm1Submitted && form1.Remark.errors}" maxlength="200"></textarea>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.required" class="invalid-feedback">
+              Please fill this field
+            </div>
+            <div *ngIf="isForm1Submitted && form1.Remark.errors?.twoSpaces" class="invalid-feedback">
+              More than two consecutive spaces are not allowed
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-3 ">
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-lg btn-primary"
+            [disabled]="this.loading">
+              <span  id="loading" role="status" aria-hidden="true"></span>
+              Submit</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <input type="date" class="form-control">
+&nbsp;
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Comment</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+
+&nbsp;
+&nbsp;
+<button type="button" class="btn btn-lg btn-primary" >Submit</button>
+&nbsp; -->

@@ -1,0 +1,51 @@
+
+
+<div style="overflow: auto;max-height: 450px;">
+
+<div class="row mb-0" style="min-height: 470px">
+    <div style="overflow: auto;" class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+      <!-- <ag-grid-angular [enableCellTextSelection]=true 
+     
+         (gridReady)="onGridReady($event)" 
+        
+         [columnDefs]="tableSelectedColumn"
+        [defaultColDef]="defaultColDef" [enableCellTextSelection]=true [paginationPageSize]="pageSize"
+        [pagination]="true" [rowData]="rowData" [rowModelType]="" [rowSelection]="'single'"
+        [suppressPaginationPanel]="true" style="width: 100%; height: auto;">
+      </ag-grid-angular> -->
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <!-- <th scope="col">ID</th> -->
+            <th scope="col">Transaction ID</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date Time</th>
+            <th scope="col">Transaction Status</th>
+            <!-- <th scope="col">File ID</th> -->
+            <!-- <th scope="col">Is Exception</th> -->
+            <!-- <th scope="col">Counter</th> -->
+            <th scope="col">Exception</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let value of rowData;let i = index">
+            <!-- <th scope="row">{{i+1}}</th> -->
+            <!-- <td>{{value.Id}}</td> -->
+            <td>{{value.TXN_ID}}</td>
+            <td>{{value.amount}}</td>
+            <td>{{value.date_time}}</td>
+            <td>{{value.txn_status}}</td>
+            <!-- <td>{{value.FileId}}</td> -->
+            <!-- <td>{{value.IsException}}</td> -->
+            <td>{{value.Exception}}</td>
+            <!-- <td>{{value.Counter}}</td> -->
+          
+          </tr>
+      
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+  <!-- {{this.rowData|json}} -->

@@ -1,0 +1,235 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ApiHttpService } from 'src/app/_services/api-http.service';
+import { PayoutSettlementService } from '../payout-settlement.service';
+import { AlertService } from 'src/app/_services/alert.service';
+import { environment } from 'src/environments/environment';
+import { DataTable } from 'simple-datatables';
+const { API_URL } = environment;
+
+@Component({
+  selector: 'app-settlement-file-two',
+  templateUrl: './settlement-file-two.component.html',
+  styleUrls: ['./settlement-file-two.component.scss']
+})
+export class SettlementFileTwoComponent implements OnInit {
+  dailysettlement2: FormGroup;
+  uploadfile2: FormGroup;
+  isForm2Submitted: Boolean = false;
+  loading: boolean;
+  fileExtension: any;
+  photoName: any;
+  ReversefeedShow: Boolean = false;
+  fileExtensionError: boolean;
+  file: any;
+  dataTable: DataTable;
+  rowData: any;
+  BulkResponse: boolean;
+  rowDataValue: boolean = false;
+  settlementmessage: any;
+
+  constructor(private apiHttpService: ApiHttpService, private settlementservice: PayoutSettlementService, private alertService: AlertService) { }
+
+  ngOnInit(): void {
+  }
+
+  isInArray(array: any, word: any) {
+    return array.indexOf(word.toLowerCase()) > -1;
+  }
+  onSubmit(formvalue: any) {
+    debugger
+    let dailysettlement1= {
+
+      "utrNo": formvalue.UTRNO,
+      "payoutRefId": formvalue.PayoutId,
+      "userName": localStorage.getItem('user'),
+
+
+    }
+
+    if (this.dailysettlement2.valid) {
+      this.loading = true
+      document?.getElementById('loading')?.classList.add("spinner-border")
+      document?.getElementById('loading')?.classList.add("spinner-border-sm")
+      this.settlementservice.Settlementfile(dailysettlement1).subscribe((res: any) => {
+        this.loading = false
+        document?.getElementById('loading')?.classList.remove("spinner-border")
+        document?.getElementById('loading')?.classList.remove("spinner-border-sm")
+        console.log(res)
+        this.settlementmessage = res;
+        if (this.settlementmessage.Status == "Success") {
+          this.alertService.successAlert(this.settlementmessage.Message)
+
+        }
+
+      })
+    }
+    this.isForm2Submitted = true;
+
+
+
+  }
+  DailySettlement()
+  {
+    document.getElementById("home")?.classList.add("show")
+    document.getElementById("profile")?.classList.remove("show")
+    document.getElementById("home")?.classList.add("active")
+    document.getElementById("profile")?.classList.remove("active")
+
+    document.getElementById("home-line-tab")?.classList.add("active")
+    document.getElementById("profile-line-tab")?.classList.remove("active")
+
+    document.getElementById("home-line-tab")?.classList.add("active")
+    document.getElementById("profile-line-tab")?.classList.remove("active")
+  }
+  ReverseFeed()
+  {
+    document.getElementById("profile")?.classList.add("show")
+    document.getElementById("home")?.classList.remove("show")
+    document.getElementById("profile")?.classList.add("active")
+    document.getElementById("home")?.classList.remove("active")
+
+    document.getElementById("profile-line-tab")?.classList.add("active")
+    document.getElementById("home-line-tab")?.classList.remove("active")
+
+  }
+  get form2() {
+    return this.uploadfile2.controls;
+  }
+  fun(id: any) {
+    document?.getElementById(id)?.classList.add("hey")
+  }
+  funover(id: any) {
+    document?.getElementById(id)?.classList.remove("hey")
+  }
+  OnlyCharacterNumberAllowed(event: { which: any; keyCode: any; }): boolean {
+
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode >= 48 && charCode <= 57) || (charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || (charCode >= 95 && charCode <= 122))   {
+      // console.log('charCode restricted is' + charCode)
+      return true;
+    }
+    return false;
+  }
+  onFileSelect(event: any) {
+    debugger
+    if (event.target.files.length > 0) {
+      var allowedExtensions = ["txt", "TXT"];
+      this.file = event.target.files[0];
+      this.photoName = this.file.name;
+
+      this.fileExtension = this.photoName.split('.').pop();
+
+      if (this.isInArray(allowedExtensions, this.fileExtension)) {
+        this.fileExtensionError = false;
+
+      } else {
+        // this.alertService.successAlert("Only " + " Excel and CSV" + " files are allowed");
+        this.alertService.errorAlert({
+          title: "Only " + "txt" + " file is allowed",
+          backdrop: true,
+          toast: false,
+        });
+        this.rowData = false;
+        this.fileExtensionError = true;
+        // this.InputVar.nativeElement.value = "";
+        // this.formarraycontrol = this.t.controls[control].reset()
+        return
+        // let setvalue =  (<HTMLInputElement>document.getElementById('File1'))
+        // setvalue.value = "";
+        // file = null;
+      }
+
+
+    }
+
+
+  }
+  onUpload(val: any) {
+    debugger
+    if (this.fileExtensionError == false && this.uploadfile2.valid) {
+      var userid: any = localStorage?.getItem('user')
+      if (this.file) {
+        //
+        const formData = new FormData();
+        formData.append('file', this.file);
+        formData.append('userName', userid);
+        this.loading = true
+        document?.getElementById('loading')?.classList.add("spinner-border")
+        document?.getElementById('loading')?.classList.add("spinner-border-sm")
+        this.apiHttpService
+          .post(
+            `${API_URL}/bulkUploadSettlementV1`, formData
+            // , {  responseType: 'text'}
+          )
+          
+          .subscribe((data: any) => {
+            this.loading = false
+            document?.getElementById('loading')?.classList.remove("spinner-border")
+            document?.getElementById('loading')?.classList.remove("spinner-border-sm")
+           
+            debugger
+            if (!data.text) {
+              this.alertService.errorAlert({ html: data[0].Message })
+              this.rowDataValue = false
+              return;
+            }
+
+            let str = data.text;
+            let pos = str.lastIndexOf(',');
+            str = str.substring(0, pos) + str.substring(pos + 1);
+            this.rowData = JSON.parse(str);
+            if (this.rowData) {
+              this.rowDataValue = true
+            }
+
+            this.rowData ? this.alertService.successAlert('	Bulk UTR Number Updated Successfully') : this.alertService.errorAlert({ html: 'Unable to upload CSV file' }),
+              this.dataTable ? this.dataTable.destroy() : console.log(this.rowData)
+            this.rowData ? this.dataTable = new DataTable("#dataTableExample") : this.dataTable.destroy(),
+
+              this.BulkResponse = this.rowData
+
+            if (this.rowData) {
+              Object.values(this.rowData).forEach((element: any, i: number) => {
+                console.log(element)
+                this.dataTable.rows().add([i + 1 + '', element.Status, element.Message, element.UTRNumber, element.PgRefrenceNumber]);
+              })
+            }
+
+
+            //,
+            // this.page =
+            //,
+            // this.onVerify()
+            // this.refreshGrid()
+          },
+            (error) => {
+              console.log("****Error------>", error)
+            })
+
+        //   var reader = new FileReader();
+        //   reader.onloadend = (e: any) => {
+        //
+        //     var contents = e.target.result;
+        //     this.photoContent = contents.split(',')[1];
+        //  }
+        //   reader.readAsDataURL(file);
+        //   this.addCorpForm.get('UploadFile').setValue(file);
+        //   this.submitFile()
+        //  this.UploagePageForm.patchValue({
+        //   "Doc":"Done",
+        // });
+        //  this.UploagePageForm.get('Doc').setValue('Done');
+      } else {
+        this.alertService.toastErrorMessageAlert({
+          html: "Failed to load file"
+        })
+      }
+    }
+    else {
+      this.rowDataValue = false;
+    }
+    this.isForm2Submitted = true;
+
+  }
+}

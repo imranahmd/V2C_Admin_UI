@@ -1,0 +1,485 @@
+<div class="row">
+  <div class="card">
+    <ul class="nav nav-tabs nav-tabs-line" id="lineTab" role="tablist">
+      <li class="nav-item" (click)="cycle()">
+        <a class="nav-link active" id="home-line-tab" data-bs-toggle="tab" role="tab" aria-controls="home"
+          aria-selected="true">Life Cycle</a>
+      </li>
+      <li class="nav-item" (click)="bulk()">
+        <a class="nav-link " id="profile-line-tab" data-bs-toggle="tab" role="tab" aria-controls="profile"
+          aria-selected="false">Bulk Search</a>
+      </li>
+
+    </ul>
+    <div class="tab-content mt-3" id="lineTabContent">
+      <div class="tab-pane fade show active" #home id="home" role="tabpanel" aria-labelledby="home-line-tab">
+        <div class="card-header row">
+          <div class="col">
+            <h4>Transaction LifeCycle</h4>
+          </div>
+          <!-- <div class="col text-end">
+              <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+                Bulk Upload
+              </button>
+            </div> -->
+        </div>
+
+        <div class="card-body bg-white">
+          <form (ngSubmit)="onSubmit(transactionListFilter.value)" [formGroup]="transactionListFilter">
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Merchant</label>
+                  <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                      
+                                               (clear)="refundListFilter.get('merchantId')?.setValue('')"
+      " -->
+                  <ng-select [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('merchantId')?.errors}"
+                    placeholder="Merchant" id="merchantId" (focus)="fun('merchantId')" formControlName="merchantId"
+                    (focusout)="funover('merchantId')" (keypress)="OnlyCharacterNumberAllowed($event)">
+                    <ng-option id="selectedOption" *ngFor="let merchant of Resdata" [value]="merchant.MerchantId">
+                      ({{merchant.MerchantId}})  {{merchant.merchant_name}} 
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Service Provider</label>
+                  <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                        
+                                                 (clear)="refundListFilter.get('merchantId')?.setValue('')"
+        " -->
+                  <ng-select formControlName="sId"
+                    [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('merchantId')?.errors}"
+                    placeholder="Service Provider" id="merchantId" (focus)="fun('merchantId')"
+                    (focusout)="funover('merchantId')" (keypress)="OnlyCharacterAllowed($event)">
+                    <ng-option id="selectedOption" *ngFor="let service of serviceproviderdata"
+                      [value]="service.FieldValue">
+                      {{service.FieldText}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Life Cycle Status <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+                  <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                        
+                                                 (clear)="refundListFilter.get('merchantId')?.setValue('')"
+        " -->
+                  <ng-select formControlName="lifecyclestatus" id="lifecyclestatus"
+                    [ngClass]="{'hello' : this.transactionListFilter.controls['lifecyclestatus'].invalid}"
+                    [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('lifecyclestatus')?.errors}"
+                    placeholder="Life Cycle Status"  (focus)="fun('lifecyclestatus')"
+                    (focusout)="funover('lifecyclestatus')" (keypress)="OnlyCharacterAllowed($event)">
+                    <ng-option id="selectedOption" *ngFor="let merchant of transactionStatus"
+                      [value]="merchant.FieldValue">
+                      {{merchant.FieldValue}} ( {{merchant.FieldText}} )
+                    </ng-option>
+                  </ng-select>
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('lifecyclestatus')?.errors?.required"
+                    class="invalid-feedback">
+                   Please select Life Cycle Status
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="mb-3">
+                  <label class="form-label">From Date <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+                  <input [(ngModel)]="searchFromDate" class="form-control" id="searchFromDate" type="date"
+                    [max]="getToday()"
+                    [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('searchFromDate')?.errors}"
+                    class="form-control" formControlName="searchFromDate" placeholder="Account Number" />
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('searchFromDate')?.errors?.required"
+                    class="invalid-feedback">
+                    Please Select From Date
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-2">
+                <div class="mb-3">
+                  <label class="form-label">To Date <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+                  <input [(ngModel)]="searchToDate" class="form-control" id="searchToDate" type="date"
+                    [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('searchToDate')?.errors}"
+                    class="form-control" formControlName="searchToDate" placeholder="Account Number" [max]="getToday()"
+                   />
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('searchToDate')?.errors?.required"
+                    class="invalid-feedback">
+                    Please Select To Date
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Transaction ID</label>
+                  <input [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('bankId')?.errors}"
+                    class="form-control" formControlName="transactionId" placeholder="Transaction ID" type="text" maxlength="20"
+                    autocomplete="new-password" id="bankId" (keypress)="keyPressFunction($event)"
+                    (focusout)="keyPressFunction($event)" (keypress)="OnlyCharacterNumberAllowed($event)">
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('bankId')?.errors?.required"
+                    class="invalid-feedback">
+                    Required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">RRN</label>
+                  <input [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('custMail')?.errors}"
+                    class="form-control" formControlName="RRN" placeholder="RRN" type="text"  maxlength="20" autocomplete="new-password"
+                    id="custMail" (keypress)="keyPressFunction($event)" (focusout)="keyPressFunction($event)" (keypress)="OnlyNumbersAllowed($event)">
+                  <div *ngIf="isForm1Submitted && refundListFilter.get('custMail')?.errors?.required"
+                    class="invalid-feedback">
+                    Required
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- <div class="row mb-2"> 
+                <div class="col-xs-12">
+                <div class="text-end">
+                  <button class="btn btn-primary pull-right" [disabled]="this.loading"  type="submit">
+                    <span  id="loading" role="status" aria-hidden="true"></span>
+                    Search
+                  </button>
+                </div>
+              </div>
+             
+           
+            </div> -->
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-2">
+                <button type="button" class="form-control btn btn-danger pull-right" (click)="resetform()">Reset
+                </button>
+              </div>
+              <div class="col-md-2">
+                <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+                <button class="form-control btn btn-primary pull-right" [disabled]="this.loading1" type="submit">
+                  <span id="loading1" role="status" aria-hidden="true"></span>
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="profile" #profile role="tabpanel" aria-labelledby="profile-line-tab">
+        <div class="card-header row">
+          <div class="col">
+            <h4>Transaction Bulk Search</h4>
+          </div>
+          <!-- <div class="col text-end">
+          <button class="btn btn-warning" type="button" (click)="bulkUpload()" >
+            Bulk Upload
+          </button>
+        </div> -->
+        </div>
+        <div class="card-body bg-white">
+          <form (ngSubmit)="onBulkSearch(transactionBulkFilter.value)" [formGroup]="transactionBulkFilter">
+            <div class="main__title col s12 mb-3">
+              <i class="fa fa-file" aria-hidden="true" style="color:grey"></i> <a
+                href="assets/Bulk_Life_cycle_status_Search.xlsx"> Click
+                Here To Download Sample File For Your Reference <i class="feather icon-download-cloud"></i></a>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 row">
+                <label class="form-label">Search Type <span aria-hidden="true" class="symbol required"
+                  style="color:red;">*</span></label>
+                <div class="form-check col-md-6">
+                  <input type="radio" class="form-check-input" name="searchType" id="TransactionId" value="TR"
+                    formControlName="searchType"
+                    [ngClass]="{'is-invalid': isForm3Submitted && refundBulkFilter.get('searchType')?.errors?.required}">
+                  <label class="form-check-label">
+                    Transaction ID
+                  </label>
+                  <div *ngIf="isForm3Submitted && refundBulkFilter.get('searchType')?.errors?.required"
+                    class="invalid-feedback">
+                    <!-- Please select Search Type -->
+                  </div>
+                </div>
+                <div class="form-check col-md-6">
+                  <input type="radio" class="form-check-input" name="searchType" id="RRN" value="RR"
+                    formControlName="searchType"
+                    [ngClass]="{'is-invalid': isForm3Submitted && refundBulkFilter.get('searchType')?.errors?.required}">
+                  <label class="form-check-label">
+                    RRN
+                  </label>
+                  <div *ngIf="isForm3Submitted && refundBulkFilter.get('searchType')?.errors?.required"
+                    class="invalid-feedback">
+                    Please select Search Type
+                  </div>
+                </div>
+              </div>
+              <!-- (click)="resetIFSC($event,accountform.controls['ifscCode'],'IFSCcheck')" -->
+
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label class="form-label">Bulk File <span aria-hidden="true" class="symbol required"
+                    style="color:red;">*</span></label>
+                  <!-- <div class="mb-3 mt-2"> -->
+
+                  <input formControlName="file" class="form-control" type="file" id="formFile"
+                    (change)='onBulkFileSelect($event)'
+                    [ngClass]="{'is-invalid': isForm3Submitted && refundBulkFilter.get('file')?.errors?.required}">
+                  <!-- <label class="form-label" for="formFile" *ngIf="!(file)" style="color:red;">Please select
+                    Document</label> -->
+                  <div *ngIf="isForm3Submitted && refundBulkFilter.get('file')?.errors?.required"
+                    class="invalid-feedback">
+                    Please select Document
+                  </div>
+                  <!-- </div> -->
+                  <!-- <div *ngIf="isForm1Submitted && refundListFilter.get('file')?.errors?.required"
+                class="invalid-feedback">
+                Required
+              </div> -->
+                </div>
+              </div>
+              <div class="col-sm-1"></div>
+              <div class="col-sm-4 row mt-1">
+                <div class="col-md-6">
+                  <button type="button" class="form-control btn btn-danger pull-right  mt-4"
+                    (click)="resetBulkform()">Reset
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <!-- <label class="form-label">Bulk Search</label> -->
+                  <button class="form-control btn btn-primary pull-right mt-4" [disabled]="this.loading" type="submit">
+                    <span id="loading" role="status" aria-hidden="true"></span>
+                    Bulk Search
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="row mb-2"> 
+            <div class="col-xs-12">
+            <div class="text-end">
+              <button class="btn btn-primary pull-right" [disabled]="this.loading"  type="submit">
+                <span  id="loading" role="status" aria-hidden="true"></span>
+                Search
+              </button>
+            </div>
+          </div>
+         
+       
+        </div> -->
+
+            <div class="row">
+              <div class="col-md-8"></div>
+              <!-- <div class="col-md-2">
+            <button type="button" class="form-control btn btn-danger pull-right" (click)="resetform()">Reset
+            </button>
+          </div> -->
+              <div class="col-md-2">
+                <!-- *ngIf="fieldData && !permissions.includes('RISK_APPROVE')" -->
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- <button (click)="dataSubmit(allBooksFormGroup.value)">
+  submit data</button> -->
+  </div>
+</div>
+
+<ng-template let-row="rowInfo" #authorList>
+  <!--    {{row | json}}-->
+  <form [formGroup]="transactionListFormGroup" *ngIf="row">
+    <div formArrayName="allTransactions">
+      <ng-container [formGroupName]="row.rowId">
+        <!--                {{i | json}}-->
+        <!--                {{row.rowId | json}}-->
+        <div>
+          <ng-container>
+            <input type="checkbox" (change)="toggleRadio(row.rowId)" name="Select" formControlName="Select" />
+          </ng-container>
+          <ng-container *ngIf="row.columnName==='Amount'">
+            <input class="form-control" type="text" name="Amount"
+              [ngClass]="{'is-invalid': this.formcontrols.controls[row.rowId].get('Amount')?.errors}"
+              [maxlength]="this.formcontrols.controls[row.rowId].get('TransactionAmount')?.value?.length || 10"
+              (keypress)="OnlyNumbersAllowed($event)" formControlName="Amount" />
+            <!--            <div>{{row | json}}</div>-->
+            <div *ngIf="this.formcontrols.controls[row.rowId].get('Amount')?.errors?.required"
+              class="invalid-feedback ">
+              Amount is Required
+            </div>
+            <div *ngIf="this.formcontrols.controls[row.rowId].get('Amount')?.errors?.min" class="invalid-feedback">
+              Can put minimum amount of 1 only
+            </div>
+            <div *ngIf="this.formcontrols.controls[row.rowId].get('Amount')?.errors?.max" class="invalid-feedback">
+              Can put maximum amount of {{ this.formcontrols.controls[row.rowId].get('TransactionAmount')?.value}} only
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</ng-template>
+
+
+<div class="row mb-md-2 mt-2 bg-white" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+  <div class="col-xl-10 main-content">
+    <!-- <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i class="feather icon-download"></i>
+      </button> -->
+    <div>
+      Total Records : {{this.collectionSize}}
+    </div>
+
+  </div>
+  <!-- <div class="col-xl-2">
+      <input [(ngModel)]="globalSearch" [ngbTypeahead]="search" class="form-control" id="typeahead-basic"
+             placeholder="Search" type="text" autocomplete="new-password"/>
+    </div> -->
+</div>
+
+<div class="row  bg-white" style="min-height: 500px" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+  <div class="col-12 col-xl-12 stretch-card ag-theme-alpine">
+    <ag-grid-angular [enableCellTextSelection]=true [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+      class="ag-theme-alpine" [rowData]="rowData" (gridReady)="onGridReady($event)"
+      (firstDataRendered)="dataRendered($event)" [paginationPageSize]="pageSize" [pagination]="true"
+      [rowSelection]="rowSelection" [suppressPaginationPanel]="true" (rowDoubleClicked)="onRowDoubleClicked($event)"
+      style="width: 100%; height: auto;" (rowSelected)="onRowSelected($event)"
+      (selectionChanged)="onSelectionChanged($event)">
+    </ag-grid-angular>
+  </div>
+</div>
+<div class="row bg-white p-2 mt-0" [style.visibility]="this.refundData ? 'visible' : 'hidden'">
+  <!-- <div class="col-md-4">
+    <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+      class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+      <option [ngValue]="10">1000</option>
+      <option [ngValue]="20">2000</option>
+      <option [ngValue]="30">3000</option>
+    </select>
+  </div> -->
+
+  <!-- <div class="col-md-8">
+    <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+      [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+      class="d-flex justify-content-end align-right">
+    </ngb-pagination>
+  </div> -->
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  <div class="card-body bg-white">
+    <form [formGroup]="transactionListSubmitForm">
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Life Cycle Status <span aria-hidden="true" class="symbol required"
+              style="color:red;">*</span></label>
+            <!-- (keyup.enter)="loadDatabyMid()" (click)="loadDatabyMid()
+                  
+                                           (clear)="refundListFilter.get('merchantId')?.setValue('')"
+  " -->
+  <!-- {{refundListFilterNew.get('lifecyclestatuss')?.value?.split['|'][1]}} -->
+            <ng-select formControlName="lifecyclestatuss" id="lifecyclestatuss"
+              [ngClass]="{'is-invalid': isForm2Submitted && refundListFilterNew.get('lifecyclestatuss')?.errors}"
+              placeholder="Life Cycle Status" id="lifecyclestatuss" (focus)="fun('lifecyclestatuss')"
+              (focusout)="funover('lifecyclestatuss')" [title]="refundListFilterNew.get('lifecyclestatuss')?.value||''">
+              <ng-option id="selectedOption" *ngFor="let userStatus of transactionUserStatus"
+                [value]="userStatus.FieldValue+' ( '+userStatus.FieldText+' )'" (mouseenter)="newFun($event)" >
+                {{userStatus.FieldValue}} ( {{userStatus.FieldText}} )
+              </ng-option>
+            </ng-select>
+            <div *ngIf="isForm2Submitted && refundListFilterNew.get('lifecyclestatuss')?.errors?.required"
+              class="invalid-feedback">
+              Please Select Life Cycle Status
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Upload File</label>
+            <input placeholder="Upload File" class="form-control" type="file" id="formFile" formControlName="file"
+              (change)='onFileSelect($event)'>
+            <!-- <label class="form-label" for="formFile">Please select
+                    Document</label> -->
+            <!-- formControlName="file" -->
+            <!-- (change)='onFileSelect($event)' -->
+            <!-- [ngClass]="{'is-invalid': isForm1Submitted && form1.file.errors}" -->
+            <!-- <div *ngIf="isForm1Submitted && form1.file.errors?.required" class="invalid-feedback">
+                      Please select Document
+                    </div>  -->
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="mb-3">
+            <label class="form-label">Remark </label>
+            <input [ngClass]="{'is-invalid': isForm1Submitted && refundListFilter.get('custMail')?.errors}"
+              class="form-control" formControlName="Remark" placeholder="Remark" type="text" autocomplete="new-password"
+              id="custMail">
+            <div *ngIf="isForm1Submitted && refundListFilter.get('custMail')?.errors?.required"
+              class="invalid-feedback">
+              Required
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-xs-12">
+          <div class="text-end">
+            <button class="btn btn-primary pull-right" [disabled]="this.loading" type="button"
+              (click)="updateTransaction(transactionListSubmitForm.value)">
+              <span id="loading" role="status" aria-hidden="true"></span>
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<app-modal #modalbloked [modalConfig]="modalConfigBlocked">
+  <!--  body of the modal (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+     -->
+  <app-transaction-view [onMerchantMId]="BlockedmerchantSelectEvent"></app-transaction-view>
+  <!-- <div>Delete </div> -->
+</app-modal>
+
+<app-modal #modalbulk [modalConfig]="modalConfigBulk">
+  <!--  body of the modal (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+     -->
+  <app-life-cycle-bulk-upload [onMerchantMId]="BulkmerchantSelectEvent"></app-life-cycle-bulk-upload>
+  <!-- <div>Delete </div> -->
+</app-modal>
+<app-modal #modalcycle [modalConfig]="modalConfigCycle">
+  <!--  body of the modal (closeModal)="closeModalBlocked($event)" [merchantStatusConfig]="tableInfo"
+     -->
+  <app-life-cycle-summary [onMerchantMId]="CyclemerchantSelectEvent"></app-life-cycle-summary>
+  <!-- <div>Delete </div> -->
+</app-modal>

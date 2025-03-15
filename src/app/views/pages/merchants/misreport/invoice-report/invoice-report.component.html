@@ -1,0 +1,158 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Invoice Report</h4>
+    </div>
+
+    <div class="card-body m-0">
+
+        <div class="row">
+            <div class="col-xl-10 main-content">
+                <!--<button type="button" class="btn btn-primary " (click)="onBtnC($event)">Add Rows</button>-->
+
+                <button (click)="onExportCSV()" class="btn btn-light" type="button">Export CSV<i
+                        class="feather icon-download"></i>
+                </button>
+                <button (click)="quickFilterShowAction($event)" class="btn btn-light" type="button">Quick Filters<i
+                        class="feather icon-filter"></i></button>
+
+            </div>
+            <div class="col-xl-2">
+                <!-- <input id="typeahead-basic" type="text" autocomplete="new-password" placeholder="Search" class="form-control" (selectItem)="searchQuickFilter($event)" [(ngModel)]="globalSearch" [ngbTypeahead]="search"/> -->
+            </div>
+        </div>
+        <div *ngIf="quickFilterShow" class="row" style="min-height: 100px">
+
+
+
+
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">Form Date</label>
+                        <input [(ngModel)]="searchFromDate" class="form-control" id="searchFromDate" type="date" max="{{currentDate|date:'yyyy-MM-dd'}}"/>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">To Date</label>
+                        <input [(ngModel)]="searchToDate" class="form-control" id="searchToDate" type="date" max="{{currentDate|date:'yyyy-MM-dd'}}"/>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="text" placeholder="Amount" [(ngModel)]="SearchAmount" autocomplete="new-password"
+                            maxlength="50" class="form-control">
+
+
+                        <!-- <div *ngIf="isForm1Submitted && form1.remark.errors?.required"
+                    class="invalid-feedback">
+                    Please fill this field
+                </div>  -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label">Invoice Status</label>
+                        <select [(ngModel)]="invoiceStatus" aria-label="Default select example" class="form-select"
+                            placeholder="Risk Code">
+                            <option value="" disabled selected>
+                                Select Invoice Status
+                            </option>
+                            <option value="0">
+                                Created
+                            </option>
+                            <option value="1">
+                                Paid</option>
+                            <option value="4">
+                                Expired</option>
+                            <option value="Y">
+                                Cancelled</option>
+
+
+
+
+
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-2">
+                    <div class="mb-3">
+
+                        <label class="col-form-label" for="searchMID">Search</label>
+
+                        <div class="col-md-6">
+                            <button (click)="onSearchBtnClick($event)" class="btn form-control btn-primary"
+                                type="button"><i class="feather text-primary icon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+        <div class="row" style="min-height:500px">
+            <div class="col-12 col-xl-12 grid-margin stretch-card ag-theme-alpine" style="margin-bottom: 0px">
+
+                <ag-grid-angular [enableCellTextSelection]=true (gridReady)="onGridReady($event)"
+                    [columnDefs]="tableSelectedColumn" [defaultColDef]="defaultColDef" [paginationPageSize]="pageSize"
+                    [pagination]="true" [rowData]="rowData" [rowModelType]="" [rowSelection]="'single'"
+                    [suppressPaginationPanel]="true" style="width: 100%; height: auto;">
+                </ag-grid-angular>
+
+
+            </div>
+        </div>
+        <div class="row bg-white p-2 mt-0">
+            <div class="col-md-4">
+
+
+                <select (change)="onPageSizeChanges($event)" [(ngModel)]="pageSize"
+                    class="form-select d-flex justify-content-end col-4" name="pageSize" style="width: auto">
+
+                    <option *ngFor="let pageNum of pageSizeArr" [ngValue]="pageNum">{{pageNum}}</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-8">
+
+
+
+                <ngb-pagination (pageChange)="onPaginationChange($event)" [(page)]="currentPage" [boundaryLinks]="true"
+                    [collectionSize]="collectionSize" [maxSize]="5" [pageSize]="pageSize" [rotate]="true"
+                    class="d-flex justify-content-end col-8 align-right">
+                </ngb-pagination>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+</div>
