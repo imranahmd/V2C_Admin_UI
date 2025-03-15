@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL:'https://pg.payfi.co.in/Api',
+  API_URL: 'http://13.235.248.165:8080/Api',
+  #API_URL:'https://pg.payfi.co.in/Api',
   USER_KEY: 'logged-user',
   appSystem: '4ae7df22936b7be31fd9ca5d99c6614a', //'ADMIN_PORTAL',
   level3_exclude: ['Merchant Master', 'Reseller Onboarding'],
