@@ -5,13 +5,14 @@
 export const environment = {
   production: false,
   API_URL: 'http://13.235.248.165:8080/Api',
-  #API_URL:'https://pg.payfi.co.in/Api',
+  // API_URL: 'https://pg.payfi.co.in/Api',  // Uncomment this when needed
   USER_KEY: 'logged-user',
   appSystem: '4ae7df22936b7be31fd9ca5d99c6614a', //'ADMIN_PORTAL',
   level3_exclude: ['Merchant Master', 'Reseller Onboarding'],
   defaultPageSize: 10,
   defaultPageSizeArr: [10, 20, 30, 40, 50]
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
